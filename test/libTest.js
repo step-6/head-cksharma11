@@ -1,6 +1,7 @@
 const { equal, deepEqual } = require('assert');
 const {
-  getNLines
+  getNLines,
+  getNCharacters
 } = require('../src/lib.js');
 
 describe('getNLines', function(){
@@ -17,7 +18,7 @@ describe('getNLines', function(){
   fileContents += "This is line 11\n"
   fileContents += "This is line 12\n"
 
-  it('should return empty line with input 0', function(){
+  it('should return empty string with input 0', function(){
     equal(getNLines(fileContents, 0), '');
   });
 
@@ -38,5 +39,17 @@ describe('getNLines', function(){
     expectedOut += "This is line 10"
 
     equal(getNLines(fileContents), expectedOut);
+  });
+});
+
+describe('getNCharacters', function(){
+  let fileContents = "This is a test file.";
+
+  it('should return empty string with n = 0', function(){
+    equal(getNCharacters(fileContents, 0), '');
+  });
+
+  it('should return first 5 characters of contents with n = 5', function(){
+    equal(getNCharacters(fileContents, 5), 'This ');
   });
 });

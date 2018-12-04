@@ -4,8 +4,7 @@ const getLinesFromHead = function(contents, numOfLines = 10){
 }
 
 const getCharsFromHead = function(contents, numOfChar){
-  let seperator = '';
-  return contents.split(seperator, numOfChar).join(seperator);
+  return contents.substr(0, numOfChar);
 }
 
 module.exports = {

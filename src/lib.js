@@ -1,12 +1,14 @@
-const getNLines = function(contents, n=10){
-  return contents.split('\n', n).join('\n');
+const getLinesFromHead = function(contents, numOfLines = 10){
+  let seperator = '\n';
+  return contents.split(seperator, numOfLines).join(seperator);
 }
 
-const getNCharacters = function(contents, n){
-  return contents.split('', n).join('');
+const getCharsFromHead = function(contents, numOfChar){
+  let seperator = '';
+  return contents.split(seperator, numOfChar).join(seperator);
 }
 
 module.exports = {
-  getNLines,
-  getNCharacters
+  getLinesFromHead,
+  getCharsFromHead
 }

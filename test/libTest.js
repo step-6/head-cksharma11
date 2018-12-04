@@ -1,10 +1,10 @@
 const { equal, deepEqual } = require('assert');
 const {
-  getNLines,
-  getNCharacters
+  getLinesFromHead,
+  getCharsFromHead
 } = require('../src/lib.js');
 
-describe('getNLines', function(){
+describe('getLinesFromHead', function(){
   let fileContents = "This is test file\n";
   fileContents += "This is line 2\n"
   fileContents += "This is line 3\n"
@@ -19,11 +19,11 @@ describe('getNLines', function(){
   fileContents += "This is line 12\n"
 
   it('should return empty string with input 0', function(){
-    equal(getNLines(fileContents, 0), '');
+    equal(getLinesFromHead(fileContents, 0), '');
   });
 
   it('should return 1 line with input 1', function(){
-    equal(getNLines(fileContents, 1), "This is test file")
+    equal(getLinesFromHead(fileContents, 1), "This is test file")
   });
 
   it('should return 10 line as default', function(){
@@ -38,18 +38,18 @@ describe('getNLines', function(){
     expectedOut += "This is line 9\n"
     expectedOut += "This is line 10"
 
-    equal(getNLines(fileContents), expectedOut);
+    equal(getLinesFromHead(fileContents), expectedOut);
   });
 });
 
-describe('getNCharacters', function(){
+describe('getCharsFromHead', function(){
   let fileContents = "This is a test file.";
 
   it('should return empty string with n = 0', function(){
-    equal(getNCharacters(fileContents, 0), '');
+    equal(getCharsFromHead(fileContents, 0), '');
   });
 
   it('should return first 5 characters of contents with n = 5', function(){
-    equal(getNCharacters(fileContents, 5), 'This ');
+    equal(getCharsFromHead(fileContents, 5), 'This ');
   });
 });

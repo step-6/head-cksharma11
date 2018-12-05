@@ -27,9 +27,7 @@ const {
 const main = function(){
   let parsedInputs = parseInputs(process.argv.slice(2));
   let fileNames = parsedInputs.fileNames;
-  console.log('fileNames : ', fileNames);
   let fileContents = fileNames.map(file => readFile(fs.readFileSync, file, 'utf8'));
-  console.log('fileContent : ', fileContents);
   console.log(head(fileContents, parsedInputs.option, parsedInputs.value, fileNames).join('\n'));
 }
 

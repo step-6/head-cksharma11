@@ -12,6 +12,7 @@ const parseInputs = function(inputs){
     parsedInputs.option = inputs[0].slice(0,2);
     parsedInputs.value = inputs[0].substr(2);
     parsedInputs.fileNames = inputs.slice(1);
+    return parsedInputs;
   }
 
   if(isStartsWithHyphen && inputs[0].length == 2){

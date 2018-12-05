@@ -4,11 +4,8 @@ const {
 } = require('../src/util.js');
 
 describe('parseInputs', function(){
-  it('should return empty array in fileNames key when no file name given', function(){
-    deepEqual(parseInputs(),{ option: 'n', numOfLines: 10, fileNames: [] });
-  });
-
-  it('should insert given file names in fileNames key', function(){
-    deepEqual(parseInputs('file1', 'file2'),{ option: 'n', numOfLines: 10, fileNames: ['file1', 'file2'] });
+  it('should categorize head inptes and return object', function(){
+    let userArgs = ['-n5', 'file1'];
+    deepEqual(parseInputs(userArgs),{ option: '-n', value: 5, fileNames: ['file1'] });
   });
 });

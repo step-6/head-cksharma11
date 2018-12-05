@@ -23,4 +23,9 @@ describe('parseInputs', function(){
     let userArgs = ['-11', 'file1'];
     deepEqual(parseInputs(userArgs),{ option: '-n', value: 11, fileNames: ['file1'] });
   });
+  
+  it('should categorize head inptes with case -n 5', function(){
+    let userArgs = ['-n', '5', 'file1'];
+    deepEqual(parseInputs(userArgs),{ option: '-n', value: 5, fileNames: ['file1'] });
+  });
 });

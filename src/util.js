@@ -1,7 +1,3 @@
-const applyFunction = function(callback, arg1, arg2){
-  return callback(arg1, arg2);
-}
-
 const parseInputs = function(...fileNames){
   let parsedInputs = {option : 'n', numOfLines : 10};
   parsedInputs.fileNames = fileNames;
@@ -9,6 +5,5 @@ const parseInputs = function(...fileNames){
 }
 
 module.exports = {
-  applyFunction,
   parseInputs
 }

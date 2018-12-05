@@ -1,16 +1,7 @@
 const { equal, deepEqual } = require('assert');
 const {
-  applyFunction,
   parseInputs
 } = require('../src/util.js');
-
-const add = (a, b) => a+b;
-
-describe('applyFunction', function(){
-  it('should call given function with arg1 and arg2', function(){
-    equal(applyFunction(add, 5, 5), 10);
-  });
-});
 
 describe('parseInputs', function(){
   it('should return empty array in fileNames key when no file name given', function(){

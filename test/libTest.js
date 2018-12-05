@@ -1,7 +1,8 @@
 const { equal, deepEqual } = require('assert');
 const {
   getLinesFromHead,
-  getCharsFromHead
+  getCharsFromHead,
+  readFile
 } = require('../src/lib.js');
 
 describe('getLinesFromHead', function(){
@@ -51,5 +52,12 @@ describe('getCharsFromHead', function(){
 
   it('should return first 5 characters of contents with n = 5', function(){
     equal(getCharsFromHead(fileContents, 5), 'This ');
+  });
+});
+
+describe('readFile', function(){
+  const add = (a, b) => a+b;
+  it('should call given function with arg1 and arg2', function(){
+    equal(readFile(add, 5, 5), 10);
   });
 });

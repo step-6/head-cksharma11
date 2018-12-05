@@ -13,7 +13,7 @@ const parseInputs = function(inputs){
     parsedInputs.value = inputs[0].substr(2);
     parsedInputs.fileNames = inputs.slice(1);
     if(parsedInputs.value == ''){
-      optionValue = inputs[1];
+      parsedInputs.value = inputs[1];
       fileNames = inputs.slice(2);
     }
   } 

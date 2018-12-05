@@ -18,4 +18,9 @@ describe('parseInputs', function(){
     let userArgs = ['file1'];
     deepEqual(parseInputs(userArgs),{ option: '-n', value: 10, fileNames: ['file1'] });
   });
+  
+  it('should categorize head inptes without passing option i.e. -11', function(){
+    let userArgs = ['-11', 'file1'];
+    deepEqual(parseInputs(userArgs),{ option: '-n', value: 11, fileNames: ['file1'] });
+  });
 });

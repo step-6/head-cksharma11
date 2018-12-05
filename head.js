@@ -1,9 +1,11 @@
 const fs = require('fs');
 const {
-  applyFunction
+  parseInputs
 } = require('./src/util.js');
 const {
-  getLinesFromHead
+  getLinesFromHead,
+  readFile,
+  head
 } = require('./src/lib.js');
 
 /* 
@@ -23,12 +25,12 @@ const {
 */
 
 const main = function(){
-  let fileName = process.argv[2];
-  let encoding = 'utf8';
-  let path = './'+fileName;
-  let fileContent = applyFunction(fs.readFileSync, path, encoding);
-  let head_10 = getLinesFromHead(fileContent);
-  console.log(head_10);
+  let parsedInputs = parseInputs(process.argv.slice(2));
+  let fileNames = parsedInputs.fileNames;
+  console.log('fileNames : ', fileNames);
+  let fileContents = fileNames.map(file => readFile(fs.readFileSync, file, 'utf8'));
+  console.log('fileContent : ', fileContents);
+  console.log(head(fileContents, parsedInputs.option, parsedInputs.value, fileNames).join('\n'));
 }
 
 main();

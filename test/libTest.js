@@ -2,7 +2,8 @@ const { equal, deepEqual } = require('assert');
 const {
   getLinesFromHead,
   getCharsFromHead,
-  readFile
+  readFile,
+  head
 } = require('../src/lib.js');
 
 describe('getLinesFromHead', function(){
@@ -59,5 +60,21 @@ describe('readFile', function(){
   const add = (a, b) => a+b;
   it('should call given function with arg1 and arg2', function(){
     equal(readFile(add, 5, 5), 10);
+  });
+});
+
+describe('head', function(){
+  it('should return default 10 lines for single file', function(){
+    let file =  "Line 1\n"+
+                "Line 2\n"+
+                "Line 3\n"+
+                "Line 4\n"+
+                "Line 5\n"+
+                "Line 6\n"+
+                "Line 7\n"+
+                "Line 8\n"+
+                "Line 9\n"+
+                "Line 10";
+    deepEqual(head([file], '-n', 10, ['file']), [file]);
   });
 });

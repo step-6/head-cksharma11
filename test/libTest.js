@@ -96,8 +96,8 @@ describe('head', function(){
                 "File2 line 5\n"+
                 "File2 line 6";
 
-    let expectedOut = ['==> file1 <==\nLine 1\nLine 2\nLine 3\n',
-                       '==> file2 <==\nFile2 line 1\nFile2 line 2\nFile2 line 3\n'];    
+    let expectedOut = ['==> file1 <==\nLine 1\nLine 2\nLine 3',
+                       '==> file2 <==\nFile2 line 1\nFile2 line 2\nFile2 line 3'];    
       
     deepEqual(head([file1, file2], '-n', 3, ['file1', 'file2']), expectedOut);
   });

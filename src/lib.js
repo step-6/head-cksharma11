@@ -22,7 +22,7 @@ const head = function(files, option, value, fileNames){
   }
 
   return files.map(file => {
-    return `==> ${fileNames[count++]} <==\n${opration(file, value)}\n`;
+    return `==> ${fileNames[count++]} <==\n${opration(file, value)}`;
   });
 }
 

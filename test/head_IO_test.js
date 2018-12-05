@@ -1,7 +1,7 @@
 const { equal, deepEqual } = require('assert');
 const {
   parseInputs
-} = require('../src/util.js');
+} = require('../src/head_IO.js');
 
 describe('parseInputs', function(){
   it('should categorize head inptes and return object with option as -n', function(){

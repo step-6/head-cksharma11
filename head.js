@@ -1,7 +1,7 @@
 const fs = require('fs');
 const {
   parseInputs
-} = require('./src/util.js');
+} = require('./src/head_IO.js');
 const {
   getLinesFromHead,
   readFile,

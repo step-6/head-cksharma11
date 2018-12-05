@@ -77,4 +77,29 @@ describe('head', function(){
                 "Line 10";
     deepEqual(head([file], '-n', 10, ['file']), [file]);
   });
+
+  it('should return number of input lines with 2 files', function(){
+    let file1 =  "Line 1\n"+
+                 "Line 2\n"+
+                 "Line 3\n"+
+                 "Line 4\n"+
+                 "Line 5\n"+
+                 "Line 6\n"+
+                 "Line 7\n"+
+                 "Line 8\n"+
+                 "Line 9\n"+
+                 "Line 10";
+    let file2 = "File2 line 1\n"+
+                "File2 line 2\n"+
+                "File2 line 3\n"+
+                "File2 line 4\n"+
+                "File2 line 5\n"+
+                "File2 line 6";
+
+    let expectedOut = ['==> file1 <==\nLine 1\nLine 2\nLine 3\n',
+                       '==> file2 <==\nFile2 line 1\nFile2 line 2\nFile2 line 3\n'];    
+      
+    deepEqual(head([file1, file2], '-n', 3, ['file1', 'file2']), expectedOut);
+  });
+
 });

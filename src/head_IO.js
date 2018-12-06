@@ -1,7 +1,7 @@
 const parseInputs = function(inputs){
-  let isStartsWithHyphen = inputs[0].startsWith('-');
+  let isOptionSpecified = inputs[0].startsWith('-');
 
-  if(isStartsWithHyphen && isFinite(inputs[0][1])){
+  if(isOptionSpecified && isFinite(inputs[0][1])){
     return {
       option: '-n', 
       value: inputs[0].slice(1), 
@@ -9,7 +9,7 @@ const parseInputs = function(inputs){
     }
   }
 
-  if(isStartsWithHyphen && inputs[0].length > 2){
+  if(isOptionSpecified && inputs[0].length > 2){
     return {
       option: inputs[0].slice(0,2), 
       value: inputs[0].substr(2), 
@@ -17,7 +17,7 @@ const parseInputs = function(inputs){
     }
   }
   
-  if(isStartsWithHyphen && inputs[0].length == 2){
+  if(isOptionSpecified && inputs[0].length == 2){
      return {
       option: inputs[0].slice(0,2), 
       value: inputs[1], 

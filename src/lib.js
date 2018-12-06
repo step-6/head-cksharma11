@@ -9,8 +9,8 @@ const getCharsFromHead = function(contents, numOfChar){
   return contents.substr(0, numOfChar);
 }
 
-const readFile = function(readFileSync, path, encoding){
-  return readFileSync(path, encoding);
+const readFile = function(reader, path, encoding){
+  return reader(path, encoding);
 }
 
 const fileNotFoundLog = function(fileName){
@@ -21,9 +21,9 @@ const addHeader = function(fileName, content){
   return '==> '+fileName+' <==\n'+content;
 }
 
-const getFileContents = function(readFileSync, existsSync, fileNames){
+const getFileContents = function(reader, checkExistence, fileNames){
   return fileNames.map(file => {
-    if(existsSync(file)) return readFile(readFileSync, file, 'utf8');
+    if(checkExistence(file)) return readFile(reader, file, 'utf8');
     return null;
   });
 }
@@ -44,11 +44,11 @@ const head = function(files, option, value, fileNames){
   });
 }
 
-const organizeHead = function(readFileSync, existsSync, {option, value, fileNames}){
+const organizeHead = function(reader, checkExistence, {option, value, fileNames}){
   let errorLog = checkErrors({option, value, fileNames});
   if(errorLog) return errorLog;
 
-  let fileContents = getFileContents(readFileSync, existsSync, fileNames);
+  let fileContents = getFileContents(reader, checkExistence, fileNames);
   let result = head(fileContents, option, value, fileNames);
   return result.join('\n\n');
 }

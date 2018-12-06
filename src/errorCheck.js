@@ -1,10 +1,10 @@
 const checkErrors = function({option, value, fileNames}){
-  if(value == 0 && option == '-n'){
-    return 'head: illegal line count -- 0';
+  if(value <= 0 && option == '-n'){
+    return 'head: illegal line count -- '+value;
   }
   
-  if(value == 0 && option == '-c'){
-    return 'head: illegal byte count -- 0';
+  if(value <= 0 && option == '-c'){
+    return 'head: illegal byte count -- '+value;
   }
 
   if(option != '-n' && option != '-c'){

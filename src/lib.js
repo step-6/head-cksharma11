@@ -17,15 +17,23 @@ const fileNotFoundLog = function(fileName){
   return 'head: '+fileName+': No such file or directory';
 }
 
+const addHeader = function(fileName, content){
+  return '==> '+fileName+' <==\n'+content;
+}
+
 const head = function(files, option, value, fileNames){
   let operations = {'-n': getLinesFromHead, '-c': getCharsFromHead};
   let fileIndex = 0;
   let fileCount = files.length;
 
   return files.map(file => {
-    if(file == null) return fileNotFoundLog(fileNames[fileIndex++]); 
-    if(fileCount == 1) return operations[option](file, value);
-    return `==> ${fileNames[fileIndex++]} <==\n${operations[option](file, value)}`;
+    let fileName = fileNames[fileIndex++];
+    if(file == null) return fileNotFoundLog(fileName); 
+    
+    let content = operations[option](file, value);
+    if(fileCount == 1) return content;
+
+    return addHeader(fileName, content); 
   });
 }
 

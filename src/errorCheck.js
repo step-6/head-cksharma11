@@ -1,9 +1,10 @@
 const checkErrors = function({option, value, fileNames}){
-  if(value <= 0 && option == '-n'){
+  let invalidValue = (value <= 0 || isNaN(value));
+  if(invalidValue && option == '-n'){
     return 'head: illegal line count -- '+value;
   }
   
-  if(value <= 0 && option == '-c'){
+  if(invalidValue && option == '-c'){
     return 'head: illegal byte count -- '+value;
   }
 

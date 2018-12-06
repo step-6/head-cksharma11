@@ -129,3 +129,33 @@ describe('fileNotFoundLog', function(){
     equal(fileNotFoundLog(fileName), expectedOut);
   });
 });
+
+describe('generateHeadResult', function(){
+  let readFileSync = (x) => x;
+  let existsSync = (x) => true;
+  let TestFile = "Line 1\n"+
+                 "Line 2\n"+
+                 "Line 3";
+  it('should return error when option value is 0', function(){
+    let expectedOut = 'head: illegal line count -- 0' 
+    equal(generateHeadResult(readFileSync, existsSync, {option:'-n', value:0, fileNames: ['file1']}), expectedOut);
+  });
+  
+  it('should return error when option negative value passed', function(){
+    let expectedOut = 'head: illegal line count -- -1' 
+    equal(generateHeadResult(readFileSync, existsSync, {option:'-n', value:-1, fileNames: ['file1']}), expectedOut);
+  });
+  
+  it('should return error when length of fileNames is 0', function(){
+    let expectedOut = 'head: option requires an argument -- n\n'+
+                      'usage: head [-n lines | -c bytes] [file ...]' 
+    equal(generateHeadResult(readFileSync, existsSync, {option:'-n', value:1, fileNames: []}), expectedOut);
+  });
+
+  it('should return n number of lines when single file is passed', function(){
+    let expectedOut = "Line 1\n"+
+                      "Line 2";
+    
+    equal(generateHeadResult(readFileSync, existsSync, {option:'-n', value:2, fileNames:[TestFile]}), expectedOut);
+  });
+});

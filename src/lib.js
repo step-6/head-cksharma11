@@ -60,5 +60,6 @@ module.exports = {
   head,
   organizeHead,
   addHeader,
-  fileNotFoundLog
+  fileNotFoundLog,
+  getFileContents
 }

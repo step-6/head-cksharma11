@@ -6,7 +6,8 @@ const {
   head,
   addHeader,
   fileNotFoundLog,
-  organizeHead  
+  organizeHead,
+  getFileContents
 } = require('../src/lib.js');
 
 describe('getLinesFromHead', function(){
@@ -160,5 +161,22 @@ describe('organizeHead', function(){
                       "Line 2";
     
     equal(organizeHead(identity, isExists, {option:'-n', value:2, fileNames:[TestFile]}), expectedOut);
+  });
+});
+
+describe('getFileContents', function(){
+  let identity = (x) => x;
+  let isExists = (x) => true;
+  let TestFile = [ 'Line 1\n', 'Line 2\n', 'Line 3' ];
+  let TestFile2 = [ ['Line 1\n', 'Line 2\n', 'Line 3'],['Line One\n', 'Line Two\n', 'Line Three'] ];
+
+  it('should return contents of one file', function(){
+    let expectedOut = TestFile;
+    deepEqual(getFileContents(identity, isExists, TestFile), expectedOut);
+  });
+  
+  it('should return contents of two files', function(){
+    let expectedOut = TestFile2; 
+    deepEqual(getFileContents(identity, isExists, TestFile2), expectedOut);
   });
 });

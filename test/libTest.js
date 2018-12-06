@@ -6,7 +6,7 @@ const {
   head,
   addHeader,
   fileNotFoundLog,
-  generateHeadResult  
+  organizeHead  
 } = require('../src/lib.js');
 
 describe('getLinesFromHead', function(){
@@ -130,7 +130,7 @@ describe('fileNotFoundLog', function(){
   });
 });
 
-describe('generateHeadResult', function(){
+describe('organizeHead', function(){
   let identity = (x) => x;
   let isExists = (x) => true;
   let TestFile = "Line 1\n"+
@@ -141,24 +141,24 @@ describe('generateHeadResult', function(){
                  "Line Three";
   it('should return error when option value is 0', function(){
     let expectedOut = 'head: illegal line count -- 0' 
-    equal(generateHeadResult(identity, isExists, {option:'-n', value:0, fileNames: ['file1']}), expectedOut);
+    equal(organizeHead(identity, isExists, {option:'-n', value:0, fileNames: ['file1']}), expectedOut);
   });
   
   it('should return error when option negative value passed', function(){
     let expectedOut = 'head: illegal line count -- -1' 
-    equal(generateHeadResult(identity, isExists, {option:'-n', value:-1, fileNames: ['file1']}), expectedOut);
+    equal(organizeHead(identity, isExists, {option:'-n', value:-1, fileNames: ['file1']}), expectedOut);
   });
   
   it('should return error when length of fileNames is 0', function(){
     let expectedOut = 'head: option requires an argument -- n\n'+
                       'usage: head [-n lines | -c bytes] [file ...]' 
-    equal(generateHeadResult(identity, isExists, {option:'-n', value:1, fileNames: []}), expectedOut);
+    equal(organizeHead(identity, isExists, {option:'-n', value:1, fileNames: []}), expectedOut);
   });
 
   it('should return n number of lines when single file is passed', function(){
     let expectedOut = "Line 1\n"+
                       "Line 2";
     
-    equal(generateHeadResult(identity, isExists, {option:'-n', value:2, fileNames:[TestFile]}), expectedOut);
+    equal(organizeHead(identity, isExists, {option:'-n', value:2, fileNames:[TestFile]}), expectedOut);
   });
 });

@@ -44,7 +44,7 @@ const head = function(files, option, value, fileNames){
   });
 }
 
-const generateHeadResult = function(readFileSync, existsSync, {option, value, fileNames}){
+const organizeHead = function(readFileSync, existsSync, {option, value, fileNames}){
   let errorLog = checkErrors({option, value, fileNames});
   if(errorLog) return errorLog;
 
@@ -58,7 +58,7 @@ module.exports = {
   getCharsFromHead,
   readFile,
   head,
-  generateHeadResult,
+  organizeHead,
   addHeader,
   fileNotFoundLog
 }

@@ -58,5 +58,7 @@ module.exports = {
   getCharsFromHead,
   readFile,
   head,
-  generateHeadResult
+  generateHeadResult,
+  addHeader,
+  fileNotFoundLog
 }

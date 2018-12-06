@@ -3,7 +3,9 @@ const {
   getLinesFromHead,
   getCharsFromHead,
   readFile,
-  head
+  head,
+  addHeader,
+  fileNotFoundLog
 } = require('../src/lib.js');
 
 describe('getLinesFromHead', function(){
@@ -102,4 +104,23 @@ describe('head', function(){
     deepEqual(head([file1, file2], '-n', 3, ['file1', 'file2']), expectedOut);
   });
 
+});
+
+describe('addHeader', function(){
+  it('should add header with passed contents', function(){
+    let content = "This is sample file";
+    let fileName = "Test.js"
+    let expectedOut = "==> Test.js <==\nThis is sample file";
+    
+    equal(addHeader(fileName, content), expectedOut);
+  });
+});
+
+describe('fileNotFoundLog', function(){
+  it('should return log when file not found', function(){
+    let fileName = "Test";
+    let expectedOut = 'head: '+fileName+': No such file or directory';
+
+    equal(fileNotFoundLog(fileName), expectedOut);
+  });
 });

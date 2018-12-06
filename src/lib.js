@@ -21,6 +21,13 @@ const addHeader = function(fileName, content){
   return '==> '+fileName+' <==\n'+content;
 }
 
+const getFileContents = function(readFileSync, existsSync, fileNames){
+  return fileNames.map(file => {
+    if(existsSync(file)) return readFile(readFileSync, file, 'utf8');
+    return null;
+  });
+}
+
 const head = function(files, option, value, fileNames){
   let operations = {'-n': getLinesFromHead, '-c': getCharsFromHead};
   let fileIndex = 0;
@@ -29,7 +36,7 @@ const head = function(files, option, value, fileNames){
   return files.map(file => {
     let fileName = fileNames[fileIndex++];
     if(file == null) return fileNotFoundLog(fileName); 
-    
+
     let content = operations[option](file, value);
     if(fileCount == 1) return content;
 
@@ -39,15 +46,9 @@ const head = function(files, option, value, fileNames){
 
 const generateHeadResult = function(readFileSync, existsSync, {option, value, fileNames}){
   let errorLog = checkErrors({option, value, fileNames});
+  if(errorLog) return errorLog;
 
-  if(errorLog){
-    return errorLog;
-  }
-
-  let fileContents = fileNames.map(file => {
-    if(!existsSync(file)) return null;
-    return readFile(readFileSync, file, 'utf8')
-  });
+  let fileContents = getFileContents(readFileSync, existsSync, fileNames);
   let result = head(fileContents, option, value, fileNames);
   return result.join('\n\n');
 }

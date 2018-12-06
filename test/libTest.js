@@ -5,7 +5,8 @@ const {
   readFile,
   head,
   addHeader,
-  fileNotFoundLog
+  fileNotFoundLog,
+  generateHeadResult  
 } = require('../src/lib.js');
 
 describe('getLinesFromHead', function(){
@@ -81,16 +82,16 @@ describe('head', function(){
   });
 
   it('should return number of input lines with 2 files', function(){
-    let file1 =  "Line 1\n"+
-                 "Line 2\n"+
-                 "Line 3\n"+
-                 "Line 4\n"+
-                 "Line 5\n"+
-                 "Line 6\n"+
-                 "Line 7\n"+
-                 "Line 8\n"+
-                 "Line 9\n"+
-                 "Line 10";
+    let file1 = "Line 1\n"+
+                "Line 2\n"+
+                "Line 3\n"+
+                "Line 4\n"+
+                "Line 5\n"+
+                "Line 6\n"+
+                "Line 7\n"+
+                "Line 8\n"+
+                "Line 9\n"+
+                "Line 10";
     let file2 = "File2 line 1\n"+
                 "File2 line 2\n"+
                 "File2 line 3\n"+
@@ -102,6 +103,10 @@ describe('head', function(){
                        '==> file2 <==\nFile2 line 1\nFile2 line 2\nFile2 line 3'];    
       
     deepEqual(head([file1, file2], '-n', 3, ['file1', 'file2']), expectedOut);
+  });
+
+  it('should return empty when no files passed', function(){
+    equal(head([], '-n', 1, []), '');  
   });
 
 });

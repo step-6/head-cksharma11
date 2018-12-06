@@ -16,15 +16,11 @@ const readFile = function(readFileSync, path, encoding){
 const head = function(files, option, value, fileNames){
   let operations = {'-n': getLinesFromHead, '-c': getCharsFromHead};
   let fileIndex = 0;
-  if(files.length == 1){
-    if(files[0] == '') return files.map(file =>{
-      return `head: ${fileNames[fileIndex++]}: No such file or directory`;
-    });
-    return files.map(file => operations[option](file, value));
-  }
+  let fileCount = files.length;
 
   return files.map(file => {
     if(file == null) return `head: ${fileNames[fileIndex++]}: No such file or directory`;
+    if(fileCount == 1) return operations[option](file, value);
     return `==> ${fileNames[fileIndex++]} <==\n${operations[option](file, value)}`;
   });
 }

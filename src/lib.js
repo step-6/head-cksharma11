@@ -24,7 +24,7 @@ const head = function(files, option, value, fileNames){
   }
 
   return files.map(file => {
-    if(file == '') return `head: ${fileNames[fileIndex++]}: No such file or directory`;
+    if(file == null) return `head: ${fileNames[fileIndex++]}: No such file or directory`;
     return `==> ${fileNames[fileIndex++]} <==\n${operations[option](file, value)}`;
   });
 }
@@ -37,11 +37,10 @@ const generateHeadResult = function(readFileSync, existsSync, {option, value, fi
   }
 
   let fileContents = fileNames.map(file => {
-    if(!existsSync(file)) return '';
+    if(!existsSync(file)) return null;
     return readFile(readFileSync, file, 'utf8')
   });
   let result = head(fileContents, option, value, fileNames);
- 
   return result.join('\n\n');
 }
 

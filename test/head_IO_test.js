@@ -28,4 +28,14 @@ describe('parseInputs', function(){
     let userArgs = ['-n', '5', 'file1'];
     deepEqual(parseInputs(userArgs),{ option: '-n', value: 5, fileNames: ['file1'] });
   });
+
+  it('should categorize head inptes and return object with invalid option', function(){
+    let userArgs = ['-v5', 'file1'];
+    deepEqual(parseInputs(userArgs),{ option: '-v', value: 5, fileNames: ['file1'] });
+  });
+  
+  it('should categorize head inptes and return object with string as value', function(){
+    let userArgs = ['-n', 'five', 'file1'];
+    deepEqual(parseInputs(userArgs),{ option: '-n', value: 'five', fileNames: ['file1'] });
+  });
 });

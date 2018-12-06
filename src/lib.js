@@ -14,17 +14,14 @@ const readFile = function(readFileSync, path, encoding){
 }
 
 const head = function(files, option, value, fileNames){
-  let opration = getLinesFromHead;
-  let count = 0;
-  if(option == '-c'){
-    opration = getCharsFromHead;
-  }
+  let operations = {'-n': getLinesFromHead, '-c': getCharsFromHead};
+  let fileIndex = 0;
   if(files.length == 1){
-    return files.map(file => opration(file, value));
+    return files.map(file => operations[option](file, value));
   }
 
   return files.map(file => {
-    return `==> ${fileNames[count++]} <==\n${opration(file, value)}`;
+    return `==> ${fileNames[fileIndex++]} <==\n${operations[option](file, value)}`;
   });
 }
 
@@ -35,7 +32,9 @@ const generateHeadResult = function(readFileSync, {option, value, fileNames}){
     return errorLog;
   }
 
-  let fileContents = fileNames.map(file => readFile(readFileSync, file, 'utf8'));
+  let fileContents = fileNames.map(file => {
+    return readFile(readFileSync, file, 'utf8')
+  });
   let result = head(fileContents, option, value, fileNames);
  
   return result.join('\n\n');

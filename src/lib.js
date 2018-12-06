@@ -17,15 +17,19 @@ const head = function(files, option, value, fileNames){
   let operations = {'-n': getLinesFromHead, '-c': getCharsFromHead};
   let fileIndex = 0;
   if(files.length == 1){
+    if(files[0] == '') return files.map(file =>{
+      return `head: ${fileNames[fileIndex++]}: No such file or directory`;
+    });
     return files.map(file => operations[option](file, value));
   }
 
   return files.map(file => {
+    if(file == '') return `head: ${fileNames[fileIndex++]}: No such file or directory`;
     return `==> ${fileNames[fileIndex++]} <==\n${operations[option](file, value)}`;
   });
 }
 
-const generateHeadResult = function(readFileSync, {option, value, fileNames}){
+const generateHeadResult = function(readFileSync, existsSync, {option, value, fileNames}){
   let errorLog = checkErrors({option, value, fileNames});
 
   if(errorLog){
@@ -33,6 +37,7 @@ const generateHeadResult = function(readFileSync, {option, value, fileNames}){
   }
 
   let fileContents = fileNames.map(file => {
+    if(!existsSync(file)) return '';
     return readFile(readFileSync, file, 'utf8')
   });
   let result = head(fileContents, option, value, fileNames);

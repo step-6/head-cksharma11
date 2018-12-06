@@ -4,7 +4,7 @@ const { generateHeadResult } = require('./src/lib.js');
 
 const main = function(){
   let parsedInputs = parseInputs(process.argv.slice(2));
-  let result = generateHeadResult(fs.readFileSync, parsedInputs);
+  let result = generateHeadResult(fs.readFileSync, fs.existsSync, parsedInputs);
   console.log(result);
 }
 main();

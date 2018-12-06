@@ -20,5 +20,9 @@ describe('checkErrors', function(){
     let errorMessage = 'head: option requires an argument -- c\nusage: head [-n lines | -c bytes] [file ...]'
     equal(checkErrors({option: '-c', value: 10, fileNames: []}), errorMessage);
   });
-
+  
+  it('should return error message for invalid option', function(){
+    let errorMessage = 'head: illegal option -- -v\nusage: head [-n lines | -c bytes] [file ...]';
+    equal(checkErrors({option: '-v', value: 10, fileNames: []}), errorMessage);
+  });
 });

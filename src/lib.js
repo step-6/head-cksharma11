@@ -30,11 +30,10 @@ const getFileContents = function(reader, checkExistence, fileNames){
 
 const head = function(files, option, value, fileNames){
   const operations = {'-n': getLinesFromHead, '-c': getCharsFromHead};
-  let fileIndex = 0;
   const fileCount = files.length;
 
-  return files.map(file => {
-    let fileName = fileNames[fileIndex++];
+  return files.map((file, index) => {
+    let fileName = fileNames[index];
     if(file == null) return fileNotFoundLog(fileName); 
 
     const content = operations[option](file, value);

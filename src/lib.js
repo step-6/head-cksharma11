@@ -1,4 +1,4 @@
-const { checkErrors } = require('./errorCheck.js');
+const { validateInputs } = require('./errorCheck.js');
 
 const getLinesFromHead = function(contents, numOfLines = 10){
   let seperator = '\n';
@@ -45,8 +45,8 @@ const head = function(files, option, value, fileNames){
 }
 
 const organizeHead = function(reader, checkExistence, {option, value, fileNames}){
-  let errorLog = checkErrors({option, value, fileNames});
-  if(errorLog) return errorLog;
+  let inputValidation = validateInputs({option, value, fileNames});
+  if(!inputValidation.isValid) return inputValidation.errorMessage;
 
   let fileContents = getFileContents(reader, checkExistence, fileNames);
   let result = head(fileContents, option, value, fileNames);

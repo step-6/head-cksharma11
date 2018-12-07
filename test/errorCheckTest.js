@@ -1,28 +1,33 @@
-const {equal, deeEqual} = require('assert');
-const {checkErrors} = require('../src/errorCheck.js');
+const {deepEqual, deeEqual} = require('assert');
+const {validateInputs} = require('../src/errorCheck.js');
 
-describe('checkErrors', function(){
-  it('should return 0 when no errors exists', function(){
-    equal(checkErrors({option: '-n', value: 10, fileNames: ['file']}), 0);
+describe('validateInputs', function(){
+  it('should return (isValid: true) when input is valid', function(){
+    let expectedOut = { isValid: true, errorMessage: '' };
+    deepEqual(validateInputs({option: '-n', value: 10, fileNames: ['file']}), expectedOut);
   });
-  
+
   it('should return error message when value is 0 and option is -n', function(){
-    let errorMessage = 'head: illegal line count -- 0';
-    equal(checkErrors({option: '-n', value: 0, fileNames: ['file']}), errorMessage);
+    let expectedOut = { isValid: false,
+      errorMessage: 'head: illegal line count -- 0' };
+    deepEqual(validateInputs({option: '-n', value: 0, fileNames: ['file']}), expectedOut);
   });
-  
+
   it('should return error message when value is 0 and option is -c', function(){
-    let errorMessage = 'head: illegal byte count -- 0';
-    equal(checkErrors({option: '-c', value: 0, fileNames: ['file']}), errorMessage);
+    let expectedOut = { isValid: false,
+      errorMessage: 'head: illegal byte count -- 0' };
+    deepEqual(validateInputs({option: '-c', value: 0, fileNames: ['file']}), expectedOut);
   });
-  
+
   it('should return error message when number of files is 0', function(){
-    let errorMessage = 'head: option requires an argument -- c\nusage: head [-n lines | -c bytes] [file ...]'
-    equal(checkErrors({option: '-c', value: 10, fileNames: []}), errorMessage);
+    let expectedOut = { isValid: false,
+      errorMessage: 'head: option requires an argument -- c\nusage: head [-n lines | -c bytes] [file ...]' }
+    deepEqual(validateInputs({option: '-c', value: 10, fileNames: []}), expectedOut);
   });
-  
+
   it('should return error message for invalid option', function(){
-    let errorMessage = 'head: illegal option -- -v\nusage: head [-n lines | -c bytes] [file ...]';
-    equal(checkErrors({option: '-v', value: 10, fileNames: []}), errorMessage);
+    let expectedOut = { isValid: false,
+      errorMessage: 'head: illegal option -- -v\nusage: head [-n lines | -c bytes] [file ...]' }
+    deepEqual(validateInputs({option: '-v', value: 10, fileNames: []}), expectedOut);
   });
 });

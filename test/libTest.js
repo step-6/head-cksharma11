@@ -49,7 +49,7 @@ describe('getLinesFromHead', function(){
 });
 
 describe('getCharsFromHead', function(){
-  let fileContents = "This is a test file.";
+  const fileContents = "This is a test file.";
 
   it('should return empty string with n = 0', function(){
     equal(getCharsFromHead(fileContents, 0), '');
@@ -69,7 +69,7 @@ describe('readFile', function(){
 
 describe('head', function(){
   it('should return default 10 lines for single file', function(){
-    let file =  "Line 1\n"+
+    const file =  "Line 1\n"+
                 "Line 2\n"+
                 "Line 3\n"+
                 "Line 4\n"+
@@ -83,7 +83,7 @@ describe('head', function(){
   });
 
   it('should return number of input lines with 2 files', function(){
-    let file1 = "Line 1\n"+
+    const file1 = "Line 1\n"+
                 "Line 2\n"+
                 "Line 3\n"+
                 "Line 4\n"+
@@ -93,14 +93,14 @@ describe('head', function(){
                 "Line 8\n"+
                 "Line 9\n"+
                 "Line 10";
-    let file2 = "File2 line 1\n"+
+    const file2 = "File2 line 1\n"+
                 "File2 line 2\n"+
                 "File2 line 3\n"+
                 "File2 line 4\n"+
                 "File2 line 5\n"+
                 "File2 line 6";
 
-    let expectedOut = ['==> file1 <==\nLine 1\nLine 2\nLine 3',
+    const expectedOut = ['==> file1 <==\nLine 1\nLine 2\nLine 3',
                        '==> file2 <==\nFile2 line 1\nFile2 line 2\nFile2 line 3'];    
       
     deepEqual(head([file1, file2], '-n', 3, ['file1', 'file2']), expectedOut);
@@ -111,15 +111,15 @@ describe('head', function(){
   });
 
   it('should return file not found log for single null file', function(){
-    let nullFile = null;
-    let expectedOut = 'head: nullFile: No such file or directory'; 
+    const nullFile = null;
+    const expectedOut = 'head: nullFile: No such file or directory'; 
     equal(head([nullFile], '-n', 1, ['nullFile']), expectedOut);
   });
 
   it('should return file not found log when one file exists', function(){
-    let nullFile = null;
-    let fileWithContent = 'File with content';
-    let expectedOut = [ 'head: nullFile: No such file or directory', 
+    const nullFile = null;
+    const fileWithContent = 'File with content';
+    const expectedOut = [ 'head: nullFile: No such file or directory', 
                         '==> fileWithContent <==\nFile with content' ]; 
     deepEqual(head([nullFile, fileWithContent], '-n', 1, ['nullFile', 'fileWithContent']), expectedOut);
   });
@@ -128,9 +128,9 @@ describe('head', function(){
 
 describe('addHeader', function(){
   it('should add header with passed contents', function(){
-    let content = "This is sample file";
-    let fileName = "Test.js"
-    let expectedOut = "==> Test.js <==\nThis is sample file";
+    const content = "This is sample file";
+    const fileName = "Test.js"
+    const expectedOut = "==> Test.js <==\nThis is sample file";
     
     equal(addHeader(fileName, content), expectedOut);
   });
@@ -138,40 +138,40 @@ describe('addHeader', function(){
 
 describe('fileNotFoundLog', function(){
   it('should return log when file not found', function(){
-    let fileName = "Test";
-    let expectedOut = 'head: '+fileName+': No such file or directory';
+    const fileName = "Test";
+    const expectedOut = 'head: '+fileName+': No such file or directory';
 
     equal(fileNotFoundLog(fileName), expectedOut);
   });
 });
 
 describe('organizeHead', function(){
-  let identity = (x) => x;
-  let exists = (x) => true;
-  let testFile = "Line 1\n"+
+  const identity = (x) => x;
+  const exists = (x) => true;
+  const testFile = "Line 1\n"+
                  "Line 2\n"+
                  "Line 3";
-  let testWithTwoElement ="Line One\n"+
+  const testWithTwoElement ="Line One\n"+
                  "Line Two\n"+
                  "Line Three";
   it('should return error when option value is 0', function(){
-    let expectedOut = 'head: illegal line count -- 0' 
+    const expectedOut = 'head: illegal line count -- 0' 
     equal(organizeHead(identity, exists, {option:'-n', value:0, fileNames: ['file1']}), expectedOut);
   });
   
   it('should return error when option negative value passed', function(){
-    let expectedOut = 'head: illegal line count -- -1' 
+    const expectedOut = 'head: illegal line count -- -1' 
     equal(organizeHead(identity, exists, {option:'-n', value:-1, fileNames: ['file1']}), expectedOut);
   });
   
   it('should return error when length of fileNames is 0', function(){
-    let expectedOut = 'head: option requires an argument -- n\n'+
+    const expectedOut = 'head: option requires an argument -- n\n'+
                       'usage: head [-n lines | -c bytes] [file ...]' 
     equal(organizeHead(identity, exists, {option:'-n', value:1, fileNames: []}), expectedOut);
   });
 
   it('should return n number of lines when single file is passed', function(){
-    let expectedOut = "Line 1\n"+
+    const expectedOut = "Line 1\n"+
                       "Line 2";
     
     equal(organizeHead(identity, exists, {option:'-n', value:2, fileNames:[testFile]}), expectedOut);
@@ -179,26 +179,26 @@ describe('organizeHead', function(){
 });
 
 describe('getFileContents', function(){
-  let identity = (x) => x;
-  let exists = (x) => true;
-  let notExists = (x) => false;
+  const identity = (x) => x;
+  const exists = (x) => true;
+  const notExists = (x) => false;
 
-  let testWithSingleInput = [ 'Line 1' ];
-  let testFile = [ 'Line 1\n', 'Line 2\n', 'Line 3' ];
-  let testWithTwoElement = [ ['Line 1\n', 'Line 2\n', 'Line 3'],['Line One\n', 'Line Two\n', 'Line Three'] ];
+  const testWithSingleInput = [ 'Line 1' ];
+  const testFile = [ 'Line 1\n', 'Line 2\n', 'Line 3' ];
+  const testWithTwoElement = [ ['Line 1\n', 'Line 2\n', 'Line 3'],['Line One\n', 'Line Two\n', 'Line Three'] ];
 
   it('should return null when file not found', function(){
-    let expectedOut = [null]; 
+    const expectedOut = [null]; 
     deepEqual(getFileContents(identity, notExists, testWithSingleInput), expectedOut);
   });
   
   it('should return contents of one file', function(){
-    let expectedOut = testFile;
+    const expectedOut = testFile;
     deepEqual(getFileContents(identity, exists, testFile), expectedOut);
   });
   
   it('should return contents of two files', function(){
-    let expectedOut = testWithTwoElement; 
+    const expectedOut = testWithTwoElement; 
     deepEqual(getFileContents(identity, exists, testWithTwoElement), expectedOut);
   });
 });

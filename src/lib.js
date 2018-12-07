@@ -1,4 +1,5 @@
 const { validateInputs } = require("./errorCheck.js");
+const { zip } = require('./util.js');
 
 const getLinesFromHead = function(contents, numOfLines = 10) {
   const seperator = "\n";
@@ -30,13 +31,13 @@ const getFileContents = function(reader, checkExistence, fileNames) {
 
 const head = function(contents, option, value, fileNames) {
   const operations = { "-n": getLinesFromHead, "-c": getCharsFromHead };
+  const headOperation = operations[option];
   const fileCount = fileNames.length;
 
-  return contents.map((content, index) => {
-    let fileName = fileNames[index];
+  return zip(contents, fileNames).map(([content, fileName]) => {
     if (content == null) return fileNotFoundLog(fileName);
 
-    let headResult = operations[option](content, value);
+    let headResult = headOperation(content, value);
     if (fileCount == 1) return headResult;
 
     return addHeader(fileName, headResult);

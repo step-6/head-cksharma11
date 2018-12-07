@@ -32,14 +32,14 @@ const head = function(contents, option, value, fileNames) {
   const operations = { "-n": getLinesFromHead, "-c": getCharsFromHead };
   const fileCount = fileNames.length;
 
-  return contents.map((file, index) => {
+  return contents.map((content, index) => {
     let fileName = fileNames[index];
-    if (file == null) return fileNotFoundLog(fileName);
+    if (content == null) return fileNotFoundLog(fileName);
 
-    const content = operations[option](file, value);
-    if (fileCount == 1) return content;
+    let headResult = operations[option](content, value);
+    if (fileCount == 1) return headResult;
 
-    return addHeader(fileName, content);
+    return addHeader(fileName, headResult);
   });
 };
 

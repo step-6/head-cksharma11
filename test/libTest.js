@@ -133,50 +133,58 @@ describe('fileNotFoundLog', function(){
 
 describe('organizeHead', function(){
   let identity = (x) => x;
-  let isExists = (x) => true;
-  let TestFile = "Line 1\n"+
+  let exists = (x) => true;
+  let testFile = "Line 1\n"+
                  "Line 2\n"+
                  "Line 3";
-  let TestFile2 ="Line One\n"+
+  let testWithTwoElement ="Line One\n"+
                  "Line Two\n"+
                  "Line Three";
   it('should return error when option value is 0', function(){
     let expectedOut = 'head: illegal line count -- 0' 
-    equal(organizeHead(identity, isExists, {option:'-n', value:0, fileNames: ['file1']}), expectedOut);
+    equal(organizeHead(identity, exists, {option:'-n', value:0, fileNames: ['file1']}), expectedOut);
   });
   
   it('should return error when option negative value passed', function(){
     let expectedOut = 'head: illegal line count -- -1' 
-    equal(organizeHead(identity, isExists, {option:'-n', value:-1, fileNames: ['file1']}), expectedOut);
+    equal(organizeHead(identity, exists, {option:'-n', value:-1, fileNames: ['file1']}), expectedOut);
   });
   
   it('should return error when length of fileNames is 0', function(){
     let expectedOut = 'head: option requires an argument -- n\n'+
                       'usage: head [-n lines | -c bytes] [file ...]' 
-    equal(organizeHead(identity, isExists, {option:'-n', value:1, fileNames: []}), expectedOut);
+    equal(organizeHead(identity, exists, {option:'-n', value:1, fileNames: []}), expectedOut);
   });
 
   it('should return n number of lines when single file is passed', function(){
     let expectedOut = "Line 1\n"+
                       "Line 2";
     
-    equal(organizeHead(identity, isExists, {option:'-n', value:2, fileNames:[TestFile]}), expectedOut);
+    equal(organizeHead(identity, exists, {option:'-n', value:2, fileNames:[testFile]}), expectedOut);
   });
 });
 
 describe('getFileContents', function(){
   let identity = (x) => x;
-  let isExists = (x) => true;
-  let TestFile = [ 'Line 1\n', 'Line 2\n', 'Line 3' ];
-  let TestFile2 = [ ['Line 1\n', 'Line 2\n', 'Line 3'],['Line One\n', 'Line Two\n', 'Line Three'] ];
+  let exists = (x) => true;
+  let notExists = (x) => false;
 
+  let testWithSingleInput = [ 'Line 1' ];
+  let testFile = [ 'Line 1\n', 'Line 2\n', 'Line 3' ];
+  let testWithTwoElement = [ ['Line 1\n', 'Line 2\n', 'Line 3'],['Line One\n', 'Line Two\n', 'Line Three'] ];
+
+  it('should return null when file not found', function(){
+    let expectedOut = [null]; 
+    deepEqual(getFileContents(identity, notExists, testWithSingleInput), expectedOut);
+  });
+  
   it('should return contents of one file', function(){
-    let expectedOut = TestFile;
-    deepEqual(getFileContents(identity, isExists, TestFile), expectedOut);
+    let expectedOut = testFile;
+    deepEqual(getFileContents(identity, exists, testFile), expectedOut);
   });
   
   it('should return contents of two files', function(){
-    let expectedOut = TestFile2; 
-    deepEqual(getFileContents(identity, isExists, TestFile2), expectedOut);
+    let expectedOut = testWithTwoElement; 
+    deepEqual(getFileContents(identity, exists, testWithTwoElement), expectedOut);
   });
 });

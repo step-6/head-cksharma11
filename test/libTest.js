@@ -110,6 +110,20 @@ describe('head', function(){
     equal(head([], '-n', 1, []), '');  
   });
 
+  it('should return file not found log for single null file', function(){
+    let nullFile = null;
+    let expectedOut = 'head: nullFile: No such file or directory'; 
+    equal(head([nullFile], '-n', 1, ['nullFile']), expectedOut);
+  });
+
+  it('should return file not found log when one file exists', function(){
+    let nullFile = null;
+    let fileWithContent = 'File with content';
+    let expectedOut = [ 'head: nullFile: No such file or directory', 
+                        '==> fileWithContent <==\nFile with content' ]; 
+    deepEqual(head([nullFile, fileWithContent], '-n', 1, ['nullFile', 'fileWithContent']), expectedOut);
+  });
+
 });
 
 describe('addHeader', function(){

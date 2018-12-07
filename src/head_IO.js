@@ -1,7 +1,15 @@
 const parseInputs = function(inputs){
-  let isOptionSpecified = inputs[0].startsWith('-');
+  const isOptionSpecified = (input) => input.startsWith('-');
 
-  if(isOptionSpecified && isFinite(inputs[0][1])){
+  const isNumberOption = (input) => isOptionSpecified(input) && isFinite(input[1]);
+
+  const isOptionWithCount = (input) => isOptionSpecified(input) && input.length > 2;
+
+  const isOptionWithoutCount = (input) => isOptionSpecified(input) && input.length ==2;
+
+  const defaultOptions =  {option : '-n', value : 10, fileNames : inputs};
+
+  if(isNumberOption(inputs[0])){
     return {
       option: '-n', 
       value: inputs[0].slice(1), 
@@ -9,7 +17,7 @@ const parseInputs = function(inputs){
     }
   }
 
-  if(isOptionSpecified && inputs[0].length > 2){
+  if(isOptionWithCount(inputs[0])){
     return {
       option: inputs[0].slice(0,2), 
       value: inputs[0].substr(2), 
@@ -17,14 +25,15 @@ const parseInputs = function(inputs){
     }
   }
   
-  if(isOptionSpecified && inputs[0].length == 2){
+  if(isOptionWithoutCount(inputs[0])){
      return {
       option: inputs[0].slice(0,2), 
       value: inputs[1], 
       fileNames: inputs.slice(2)
     }
   }
-  return {option : '-n', value : 10, fileNames : inputs};
+
+  return defaultOptions;
 }
 
 module.exports = {

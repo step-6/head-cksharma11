@@ -28,11 +28,11 @@ const getFileContents = function(reader, checkExistence, fileNames) {
   });
 };
 
-const head = function(files, option, value, fileNames) {
+const head = function(contents, option, value, fileNames) {
   const operations = { "-n": getLinesFromHead, "-c": getCharsFromHead };
-  const fileCount = files.length;
+  const fileCount = contents.length;
 
-  return files.map((file, index) => {
+  return contents.map((file, index) => {
     let fileName = fileNames[index];
     if (file == null) return fileNotFoundLog(fileName);
 

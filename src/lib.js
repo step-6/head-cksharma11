@@ -29,8 +29,9 @@ const getFileContents = function(reader, checkExistence, fileNames) {
   });
 };
 
+const operations = { "-n": getLinesFromHead, "-c": getCharsFromHead };
+
 const head = function(contents, option, value, fileNames) {
-  const operations = { "-n": getLinesFromHead, "-c": getCharsFromHead };
   const headOperation = operations[option];
   const fileCount = fileNames.length;
 

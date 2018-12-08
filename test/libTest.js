@@ -157,11 +157,40 @@ describe("fileNotFoundLog", function() {
   });
 });
 
+const readFileSync = function(fileName) {
+  let fileContents = {
+    names: "A\nB\nC\nD\nE",
+    numbers: "1\n2\n3\n4\n5"
+  };
+  return fileContents[fileName];
+};
+
+const existsSync = function(fileName) {
+  let fileNames = ["names", "numbers"];
+  return fileNames.includes(fileName);
+};
+
 describe("organizeHead", function() {
   const identity = x => x;
   const exists = x => true;
   const testFile = "Line 1\n" + "Line 2\n" + "Line 3";
   const testWithTwoElement = "Line One\n" + "Line Two\n" + "Line Three";
+  
+  it('should return list of names when file name is names', function(){
+    let expectedOut = "A\nB";
+    equal(organizeHead(readFileSync, existsSync, {option: '-n', value: 2, fileNames: ['names']}), expectedOut);
+  });
+  
+  it('should return list of numbers when file name is numbers', function(){
+    let expectedOut = "1\n2";
+    equal(organizeHead(readFileSync, existsSync, {option: '-n', value: 2, fileNames: ['numbers']}), expectedOut);
+  });
+  
+  it('should return list of numbers and names when both files passed', function(){
+    let expectedOut = "==> names <==\nA\nB\n\n==> numbers <==\n1\n2";
+    equal(organizeHead(readFileSync, existsSync, {option: '-n', value: 2, fileNames: ['names', 'numbers']}), expectedOut);
+  });
+  
   it("should return error when option value is 0", function() {
     const expectedOut = "head: illegal line count -- 0";
     equal(

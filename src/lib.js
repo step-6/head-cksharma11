@@ -2,8 +2,8 @@ const { validateInputs } = require("./errorCheck.js");
 const { zip } = require('./util.js');
 
 const getLinesFromHead = function(contents, numOfLines = 10) {
-  const seperator = "\n";
-  return contents.split(seperator, numOfLines).join(seperator);
+  const separator = "\n";
+  return contents.split(separator, numOfLines).join(separator);
 };
 
 const getCharsFromHead = function(contents, numOfChar) {

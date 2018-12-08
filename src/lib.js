@@ -31,16 +31,20 @@ const getFileContents = function(reader, checkExistence, fileNames) {
 
 const operations = { "-n": getLinesFromHead, "-c": getCharsFromHead };
 
+const isSingleExistingFile = function(fileCount, content){
+  return fileCount == 1 && content != null;
+}
+
 const head = function(contents, option, value, fileNames) {
   const headOperation = operations[option];
-  const fileCount = fileNames.length;
+
+  if (isSingleExistingFile(fileNames.length, contents[0])) {
+    return [headOperation(contents[0],value)];
+  }
 
   return zip(contents, fileNames).map(([content, fileName]) => {
     if (content == null) return fileNotFoundLog(fileName);
-
     let headResult = headOperation(content, value);
-    if (fileCount == 1) return headResult;
-
     return addHeader(fileName, headResult);
   });
 };

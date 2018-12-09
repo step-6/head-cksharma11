@@ -1,5 +1,5 @@
 const { equal, deepEqual } = require("assert");
-const { parseInputs } = require("../src/head_IO.js");
+const { parseInputs } = require("../src/headIO.js");
 
 describe("parseInputs", function() {
   it("should categorize head inptes and return object with option as -n", function() {

@@ -62,6 +62,13 @@ const organizeHead = function(
   return result.join("\n\n");
 };
 
+const getLinesFromTail = function(content, numOfLines){
+  let separator = '\n';
+  let reversedContent = content.split(separator).reverse();
+  let slicedLines = reversedContent.slice(0, numOfLines);
+  return slicedLines.reverse().join(separator);
+}
+
 module.exports = {
   getLinesFromHead,
   getCharsFromHead,
@@ -70,5 +77,6 @@ module.exports = {
   organizeHead,
   addHeader,
   fileNotFoundLog,
-  getFileContents
+  getFileContents,
+  getLinesFromTail
 };

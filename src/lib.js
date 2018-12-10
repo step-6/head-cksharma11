@@ -14,8 +14,8 @@ const readFile = function(reader, path, encoding) {
   return reader(path, encoding);
 };
 
-const fileNotFoundLog = function(fileName) {
-  return "head: " + fileName + ": No such file or directory";
+const fileNotFoundLog = function(fileName, command) {
+  return command+": " + fileName + ": No such file or directory";
 };
 
 const addHeader = function(fileName, content) {
@@ -41,7 +41,7 @@ const head = function(contents, option, value, fileNames) {
   }
 
   return zip(contents, fileNames).map(([content, fileName]) => {
-    if (content == null) return fileNotFoundLog(fileName);
+    if (content == null) return fileNotFoundLog(fileName, 'head');
     let headResult = headOperation(content, value);
     return addHeader(fileName, headResult);
   });
@@ -80,7 +80,7 @@ const tail = function(contents, option, value, fileNames) {
   }
 
   return zip(contents, fileNames).map(([content, fileName]) => {
-    if (content == null) return fileNotFoundLog(fileName);
+    if (content == null) return fileNotFoundLog(fileName, 'tail');
     let tailResult = tailOperation(content, value);
     return addHeader(fileName, tailResult);
   });

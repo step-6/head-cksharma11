@@ -152,11 +152,18 @@ describe("addHeader", function() {
 });
 
 describe("fileNotFoundLog", function() {
-  it("should return log when file not found", function() {
+  it("should return log when file not found (head)", function() {
     const fileName = "Test";
     const expectedOut = "head: " + fileName + ": No such file or directory";
 
-    equal(fileNotFoundLog(fileName), expectedOut);
+    equal(fileNotFoundLog(fileName, 'head'), expectedOut);
+  });
+
+  it("should return log when file not found (tail)", function() {
+    const fileName = "Test";
+    const expectedOut = "tail: " + fileName + ": No such file or directory";
+
+    equal(fileNotFoundLog(fileName, 'tail'), expectedOut);
   });
 });
 
@@ -327,11 +334,11 @@ describe( "organizeTail", function(){
   });
 
   it("should return file not found log when file not found", function() {
-    const expectedOut = "head: abc: No such file or directory";
+    const expectedOut = "tail: abc: No such file or directory";
     equal(organizeTail(readFileSync, existsSync, {option: '-n', value: 2, fileNames: ['abc']}), expectedOut);
   });
   
-  it("should return file not found log when file not found", function() {
+  it("should return error when invalid argument passed", function() {
     const expectedOut = "head: illegal option -- -v\nusage: head [-n lines | -c bytes] [file ...]";
     equal(organizeTail(readFileSync, existsSync, {option: '-v', value: 2, fileNames: ['abc']}), expectedOut);
   });

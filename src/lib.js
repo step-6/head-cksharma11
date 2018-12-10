@@ -64,14 +64,14 @@ const organizeHead = function(
 
 const getLinesFromTail = function(content, numOfLines){
   let separator = '\n';
-  let reversedContent = content.split(separator).reverse();
-  let slicedLines = reversedContent.slice(0, numOfLines);
-  return slicedLines.reverse().join(separator);
+  let lines = content.split(separator);
+  let length = lines.length;
+  return lines.slice(length - numOfLines).join(separator);
 }
 
 const getCharsFromTail = function(content, numOfChar){
   let length = content.length;
-  return content.slice(length-numOfChar, length);
+  return content.slice(length-numOfChar);
 }
 
 module.exports = {

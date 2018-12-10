@@ -297,4 +297,14 @@ describe("getCharsFromTail", function(){
       let testFile = 'abcd';
       equal(getCharsFromTail(testFile, 1), 'd');
     });
+
+    it("should last 2 characters when input is 2", function(){
+      let testFile = '1234\n5678';
+      equal(getCharsFromTail(testFile, 2), '78');
+    });
+
+    it("should return empty string when input is 0", function(){
+      let testFile = 'abcd';
+      equal(getCharsFromTail(testFile, 0), '');
+    });
 });

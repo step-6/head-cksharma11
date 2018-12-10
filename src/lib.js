@@ -69,6 +69,11 @@ const getLinesFromTail = function(content, numOfLines){
   return slicedLines.reverse().join(separator);
 }
 
+const getCharsFromTail = function(content, numOfChar){
+  let length = content.length;
+  return content.slice(length-numOfChar, length);
+}
+
 module.exports = {
   getLinesFromHead,
   getCharsFromHead,
@@ -78,5 +83,6 @@ module.exports = {
   addHeader,
   fileNotFoundLog,
   getFileContents,
-  getLinesFromTail
+  getLinesFromTail,
+  getCharsFromTail
 };

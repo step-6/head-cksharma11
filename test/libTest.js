@@ -8,7 +8,8 @@ const {
   fileNotFoundLog,
   organizeHead,
   getFileContents,
-  getLinesFromTail
+  getLinesFromTail,
+  getCharsFromTail
 } = require("../src/lib.js");
 
 describe("getLinesFromHead", function() {
@@ -277,16 +278,23 @@ describe("getFileContents", function() {
 describe("getLinesFromTail", function(){
   it("should return last line of content for 1 input", function(){
     let testFile = 'A\nB\nC\nD';
-    deepEqual(getLinesFromTail(testFile, 1), 'D');
+    equal(getLinesFromTail(testFile, 1), 'D');
   });
   
   it("should retrun last two line of content for 2 input", function(){
     let testFile = 'A\nB\nC\nD';
-    deepEqual(getLinesFromTail(testFile, 2), 'C\nD');
+    equal(getLinesFromTail(testFile, 2), 'C\nD');
   });
   
   it("should return empty string for input 0", function(){
     let testFile = 'A\nB\nC\nD';
-    deepEqual(getLinesFromTail(testFile, 0), '');
+    equal(getLinesFromTail(testFile, 0), '');
   });
+});
+
+describe("getCharsFromTail", function(){
+    it("should return last character of when input is 1", function(){
+      let testFile = 'abcd';
+      equal(getCharsFromTail(testFile, 1), 'd');
+    });
 });

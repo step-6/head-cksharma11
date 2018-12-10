@@ -275,13 +275,18 @@ describe("getFileContents", function() {
 });
 
 describe("getLinesFromTail", function(){
-  it("should return empty string for last line of content for 1 input", function(){
+  it("should return last line of content for 1 input", function(){
     let testFile = 'A\nB\nC\nD';
     deepEqual(getLinesFromTail(testFile, 1), 'D');
   });
   
-  it("should return empty string for last two line of content for 2 input", function(){
+  it("should retrun last two line of content for 2 input", function(){
     let testFile = 'A\nB\nC\nD';
     deepEqual(getLinesFromTail(testFile, 2), 'C\nD');
+  });
+  
+  it("should return empty string for input 0", function(){
+    let testFile = 'A\nB\nC\nD';
+    deepEqual(getLinesFromTail(testFile, 0), '');
   });
 });

@@ -9,7 +9,8 @@ const {
   organizeHead,
   getFileContents,
   getLinesFromTail,
-  getCharsFromTail
+  getCharsFromTail,
+  organizeTail
 } = require("../src/lib.js");
 
 describe("getLinesFromHead", function() {
@@ -307,4 +308,31 @@ describe("getCharsFromTail", function(){
       let testFile = 'abcd';
       equal(getCharsFromTail(testFile, 0), '');
     });
+});
+
+describe( "organizeTail", function(){
+  it('should return list of names when file name is names', function(){
+    let expectedOut = "D\nE";
+    equal(organizeTail(readFileSync, existsSync, {option: '-n', value: 2, fileNames: ['names']}), expectedOut);
+  });
+  
+  it('should return list of numbers when file name is numbers', function(){
+    let expectedOut = "4\n5";
+    equal(organizeTail(readFileSync, existsSync, {option: '-n', value: 2, fileNames: ['numbers']}), expectedOut);
+  });
+
+  it('should return list of numbers and names when both files passed', function(){
+    let expectedOut = "==> names <==\nD\nE\n\n==> numbers <==\n4\n5";
+    equal(organizeTail(readFileSync, existsSync, {option: '-n', value: 2, fileNames: ['names', 'numbers']}), expectedOut);
+  });
+
+  it("should return file not found log when file not found", function() {
+    const expectedOut = "head: abc: No such file or directory";
+    equal(organizeTail(readFileSync, existsSync, {option: '-n', value: 2, fileNames: ['abc']}), expectedOut);
+  });
+  
+  it("should return file not found log when file not found", function() {
+    const expectedOut = "head: illegal option -- -v\nusage: head [-n lines | -c bytes] [file ...]";
+    equal(organizeTail(readFileSync, existsSync, {option: '-v', value: 2, fileNames: ['abc']}), expectedOut);
+  });
 });

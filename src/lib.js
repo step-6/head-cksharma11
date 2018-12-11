@@ -92,7 +92,7 @@ const organizeTail = function(
   checkExistence,
   { option, value, fileNames }
 ) {
-  const inputValidation = validateTailInputs({ option, value, fileNames });
+  const inputValidation = validations['tail']({ option, value, fileNames });
   if (!inputValidation.isValid) return inputValidation.errorMessage;
 
   const fileContents = getFileContents(reader, checkExistence, fileNames);
@@ -102,6 +102,7 @@ const organizeTail = function(
 
 const headOperations = { "-n": getLinesFromHead, "-c": getCharsFromHead };
 const tailOperations = { "-n": getLinesFromTail, "-c": getCharsFromTail };
+const validations = { "head": validateHeadInputs, "tail": validateTailInputs };
 
 module.exports = {
   getLinesFromHead,

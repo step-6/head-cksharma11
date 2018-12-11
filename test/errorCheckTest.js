@@ -1,11 +1,11 @@
-const { deepEqual, deeEqual } = require("assert");
-const { validateInputs } = require("../src/errorCheck.js");
+const { deepEqual } = require("assert");
+const { validateHeadInputs } = require("../src/errorCheck.js");
 
-describe("validateInputs", function() {
+describe("validateHeadInputs", function() {
   it("should return (isValid: true) when input is valid", function() {
     const expectedOut = { isValid: true, errorMessage: "" };
     deepEqual(
-      validateInputs({ option: "-n", value: 10, fileNames: ["file"] }),
+      validateHeadInputs({ option: "-n", value: 10, fileNames: ["file"] }),
       expectedOut
     );
   });
@@ -16,7 +16,7 @@ describe("validateInputs", function() {
       errorMessage: "head: illegal line count -- 0"
     };
     deepEqual(
-      validateInputs({ option: "-n", value: 0, fileNames: ["file"] }),
+      validateHeadInputs({ option: "-n", value: 0, fileNames: ["file"] }),
       expectedOut
     );
   });
@@ -27,7 +27,7 @@ describe("validateInputs", function() {
       errorMessage: "head: illegal byte count -- 0"
     };
     deepEqual(
-      validateInputs({ option: "-c", value: 0, fileNames: ["file"] }),
+      validateHeadInputs({ option: "-c", value: 0, fileNames: ["file"] }),
       expectedOut
     );
   });
@@ -39,7 +39,7 @@ describe("validateInputs", function() {
         "head: option requires an argument -- c\nusage: head [-n lines | -c bytes] [file ...]"
     };
     deepEqual(
-      validateInputs({ option: "-c", value: 10, fileNames: [] }),
+      validateHeadInputs({ option: "-c", value: 10, fileNames: [] }),
       expectedOut
     );
   });
@@ -51,7 +51,7 @@ describe("validateInputs", function() {
         "head: illegal option -- -v\nusage: head [-n lines | -c bytes] [file ...]"
     };
     deepEqual(
-      validateInputs({ option: "-v", value: 10, fileNames: [] }),
+      validateHeadInputs({ option: "-v", value: 10, fileNames: [] }),
       expectedOut
     );
   });

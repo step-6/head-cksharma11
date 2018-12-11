@@ -1,4 +1,4 @@
-const validateInputs = function({ option, value, fileNames }) {
+const validateHeadInputs = function({ option, value, fileNames }) {
   const isInvalidCount = value => value <= 0 || isNaN(value);
 
   const isLineCountInvalid = (option, value) =>
@@ -79,6 +79,6 @@ const validateTailInputs = function({option, value, fileNames}){
 }
 
 module.exports = {
-  validateInputs,
+  validateHeadInputs,
   validateTailInputs
 };

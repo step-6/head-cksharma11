@@ -73,15 +73,16 @@ const getCharsFromTail = function(content, numOfChar){
 }
 
 const tail = function(contents, option, value, fileNames) {
+  const absValue = Math.abs(value);
   const tailOperation = tailOperations[option];
 
   if (isSingleExistingFile(fileNames.length, contents[0])) {
-    return [tailOperation(contents[0],value)];
+    return [tailOperation(contents[0],absValue)];
   }
 
   return zip(contents, fileNames).map(([content, fileName]) => {
     if (content == null) return fileNotFoundLog(fileName, 'tail');
-    let tailResult = tailOperation(content, value);
+    let tailResult = tailOperation(content, absValue);
     return addHeader(fileName, tailResult);
   });
 };
@@ -89,21 +90,18 @@ const tail = function(contents, option, value, fileNames) {
 const organizeTail = function(
   reader,
   checkExistence,
-  { option, value, fileNames },
-  command
+  { option, value, fileNames }
 ) {
-  const inputValidation = validations[command]({ option, value, fileNames });
+  const inputValidation = validateTailInputs({ option, value, fileNames });
   if (!inputValidation.isValid) return inputValidation.errorMessage;
 
   const fileContents = getFileContents(reader, checkExistence, fileNames);
-  const result = tail(fileContents, option, value, fileNames, command);
+  const result = tail(fileContents, option, value, fileNames);
   return result.join("\n\n");
 };
 
 const headOperations = { "-n": getLinesFromHead, "-c": getCharsFromHead };
 const tailOperations = { "-n": getLinesFromTail, "-c": getCharsFromTail };
-const validations = { "head": validateHeadInputs, "tail": validateTailInputs };
-const operations = { "head": headOperations, "tail": tailOperations };
 
 module.exports = {
   getLinesFromHead,

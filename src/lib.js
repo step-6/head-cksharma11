@@ -72,17 +72,16 @@ const getCharsFromTail = function(content, numOfChar){
   return content.slice(length-numOfChar);
 }
 
-const tail = function(contents, option, value, fileNames, command) {
-  const absValue = Math.abs(value);
-  const tailOperation = operations[command][option];
+const tail = function(contents, option, value, fileNames) {
+  const tailOperation = tailOperations[option];
 
   if (isSingleExistingFile(fileNames.length, contents[0])) {
-    return [tailOperation(contents[0],absValue)];
+    return [tailOperation(contents[0],value)];
   }
 
   return zip(contents, fileNames).map(([content, fileName]) => {
     if (content == null) return fileNotFoundLog(fileName, 'tail');
-    let tailResult = tailOperation(content, absValue);
+    let tailResult = tailOperation(content, value);
     return addHeader(fileName, tailResult);
   });
 };

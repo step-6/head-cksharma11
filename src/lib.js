@@ -63,13 +63,11 @@ const organizeHead = function(
 const getLinesFromTail = function(content, numOfLines){
   let separator = '\n';
   let lines = content.split(separator);
-  let length = lines.length;
-  return lines.slice(length - numOfLines).join(separator);
+  return lines.slice(-numOfLines).join(separator);
 }
 
 const getCharsFromTail = function(content, numOfChar){
-  let length = content.length;
-  return content.slice(length-numOfChar);
+  return content.slice(-numOfChar);
 }
 
 const tail = function(contents, option, value, fileNames) {
@@ -93,6 +91,7 @@ const organizeTail = function(
   { option, value, fileNames }
 ) {
   const inputValidation = validateTailInputs({ option, value, fileNames });
+  if(value == 0) return '';  
   if (!inputValidation.isValid) return inputValidation.errorMessage;
 
   const fileContents = getFileContents(reader, checkExistence, fileNames);

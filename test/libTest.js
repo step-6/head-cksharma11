@@ -294,9 +294,9 @@ describe("getLinesFromTail", function(){
     equal(getLinesFromTail(testFile, 2), 'C\nD');
   });
   
-  it("should return empty string for input 0", function(){
+  it("should return back file with input 0", function(){
     let testFile = 'A\nB\nC\nD';
-    equal(getLinesFromTail(testFile, 0), '');
+    equal(getLinesFromTail(testFile, 0), testFile);
   });
 });
 
@@ -311,9 +311,9 @@ describe("getCharsFromTail", function(){
       equal(getCharsFromTail(testFile, 2), '78');
     });
 
-    it("should return empty string when input is 0", function(){
+    it("should return back file with input 0", function(){
       let testFile = 'abcd';
-      equal(getCharsFromTail(testFile, 0), '');
+      equal(getCharsFromTail(testFile, 0), testFile);
     });
 });
 

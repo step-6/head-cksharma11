@@ -1,5 +1,5 @@
 const { deepEqual } = require("assert");
-const { validateHeadInputs } = require("../src/errorCheck.js");
+const { validateHeadInputs, validateTailInputs } = require("../src/errorCheck.js");
 
 describe("validateHeadInputs", function() {
   it("should return (isValid: true) when input is valid", function() {
@@ -12,7 +12,7 @@ describe("validateHeadInputs", function() {
 
   it("should return error message when value is 0 and option is -n", function() {
     const expectedOut = {
-      isValid: false,
+      isValid: false, 
       errorMessage: "head: illegal line count -- 0"
     };
     deepEqual(
@@ -54,5 +54,27 @@ describe("validateHeadInputs", function() {
       validateHeadInputs({ option: "-v", value: 10, fileNames: [] }),
       expectedOut
     );
+  });
+});
+
+describe("validateTailInputs", function(){
+  it("should return error message for invalid option", function(){
+    const expectedOut = {
+      isValid: false,
+      errorMessage:
+      "tail: illegal option -- -v\n"+
+      "usage: tail [-F | -f | -r] [-q] [-b # | -c # | -n #] [file ...]"
+    };
+
+    deepEqual(validateTailInputs({ option: "-v", value: 10, fileNames: [] }), expectedOut );
+  });
+
+  it("should return error message for invalid count", function(){
+    const expectedOut = {
+      isValid: false,
+      errorMessage: "tail: illegal offset -- a" 
+    };
+    
+    deepEqual(validateTailInputs({ option: "-n", value: 'a', fileNames: [] }), expectedOut );
   });
 });

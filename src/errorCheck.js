@@ -68,7 +68,7 @@ const validateTailInputs = function({option, value, fileNames}){
   if (isInvalidCount(value)) {
     return {
       isValid: false,
-      errorMessage: "tail: illegal offset --" + value
+      errorMessage: "tail: illegal offset -- " + value
     };
   }
 

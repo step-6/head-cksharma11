@@ -1,4 +1,4 @@
-const { validateInputs } = require("./errorCheck.js");
+const { validateInputs, validateTailInputs } = require("./errorCheck.js");
 const { zip } = require('./util.js');
 
 const getLinesFromHead = function(contents, numOfLines = 10) {
@@ -91,7 +91,7 @@ const organizeTail = function(
   checkExistence,
   { option, value, fileNames }
 ) {
-  const inputValidation = validateInputs({ option, value, fileNames });
+  const inputValidation = validateTailInputs({ option, value, fileNames });
   if (!inputValidation.isValid) return inputValidation.errorMessage;
 
   const fileContents = getFileContents(reader, checkExistence, fileNames);

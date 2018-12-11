@@ -51,6 +51,34 @@ const validateInputs = function({ option, value, fileNames }) {
   };
 };
 
+const validateTailInputs = function({option, value, fileNames}){
+  const isInvalidCount = value => isNaN(value);
+
+  const isInvalidOption = option => option != "-n" && option != "-c";
+  
+  if (isInvalidOption(option, value)) {
+    return {
+      isValid: false,
+      errorMessage:
+      "tail: illegal option -- "+option+"\n"+
+      "usage: tail [-F | -f | -r] [-q] [-b # | -c # | -n #] [file ...]"
+    };
+  }
+
+  if (isInvalidCount(value)) {
+    return {
+      isValid: false,
+      errorMessage: "tail: illegal offset --" + value
+    };
+  }
+
+  return {
+    isValid: true,
+    errorMessage: ""
+  };
+}
+
 module.exports = {
-  validateInputs
+  validateInputs,
+  validateTailInputs
 };

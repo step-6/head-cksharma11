@@ -338,8 +338,8 @@ describe( "organizeTail", function(){
     equal(organizeTail(readFileSync, existsSync, {option: '-n', value: 2, fileNames: ['abc']}), expectedOut);
   });
   
-  it("should return error when invalid argument passed", function() {
-    const expectedOut = "head: illegal option -- -v\nusage: head [-n lines | -c bytes] [file ...]";
+  it("should return when invalid argument passed", function() {
+    const expectedOut = "tail: illegal option -- -v\nusage: tail [-F | -f | -r] [-q] [-b # | -c # | -n #] [file ...]";
     equal(organizeTail(readFileSync, existsSync, {option: '-v', value: 2, fileNames: ['abc']}), expectedOut);
   });
 });

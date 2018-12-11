@@ -74,7 +74,7 @@ const getCharsFromTail = function(content, numOfChar){
 
 const tail = function(contents, option, value, fileNames) {
   const absValue = Math.abs(value);
-  const tailOperation = tailOperations[option];
+  const tailOperation = operations['tail'][option];
 
   if (isSingleExistingFile(fileNames.length, contents[0])) {
     return [tailOperation(contents[0],absValue)];
@@ -103,6 +103,7 @@ const organizeTail = function(
 const headOperations = { "-n": getLinesFromHead, "-c": getCharsFromHead };
 const tailOperations = { "-n": getLinesFromTail, "-c": getCharsFromTail };
 const validations = { "head": validateHeadInputs, "tail": validateTailInputs };
+const operations = { "head": headOperations, "tail": tailOperations };
 
 module.exports = {
   getLinesFromHead,

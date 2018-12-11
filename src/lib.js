@@ -73,15 +73,16 @@ const getCharsFromTail = function(content, numOfChar){
 }
 
 const tail = function(contents, option, value, fileNames) {
+  const absValue = Math.abs(value);
   const tailOperation = tailOperations[option];
 
   if (isSingleExistingFile(fileNames.length, contents[0])) {
-    return [tailOperation(contents[0],value)];
+    return [tailOperation(contents[0],absValue)];
   }
 
   return zip(contents, fileNames).map(([content, fileName]) => {
     if (content == null) return fileNotFoundLog(fileName, 'tail');
-    let tailResult = tailOperation(content, value);
+    let tailResult = tailOperation(content, absValue);
     return addHeader(fileName, tailResult);
   });
 };

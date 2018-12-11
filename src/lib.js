@@ -72,9 +72,9 @@ const getCharsFromTail = function(content, numOfChar){
   return content.slice(length-numOfChar);
 }
 
-const tail = function(contents, option, value, fileNames) {
+const tail = function(contents, option, value, fileNames, command) {
   const absValue = Math.abs(value);
-  const tailOperation = operations['tail'][option];
+  const tailOperation = operations[command][option];
 
   if (isSingleExistingFile(fileNames.length, contents[0])) {
     return [tailOperation(contents[0],absValue)];
@@ -90,13 +90,14 @@ const tail = function(contents, option, value, fileNames) {
 const organizeTail = function(
   reader,
   checkExistence,
-  { option, value, fileNames }
+  { option, value, fileNames },
+  command
 ) {
-  const inputValidation = validations['tail']({ option, value, fileNames });
+  const inputValidation = validations[command]({ option, value, fileNames });
   if (!inputValidation.isValid) return inputValidation.errorMessage;
 
   const fileContents = getFileContents(reader, checkExistence, fileNames);
-  const result = tail(fileContents, option, value, fileNames);
+  const result = tail(fileContents, option, value, fileNames, command);
   return result.join("\n\n");
 };
 

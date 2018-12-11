@@ -318,28 +318,30 @@ describe("getCharsFromTail", function(){
 });
 
 describe( "organizeTail", function(){
+  const command = "tail";
+
   it('should return list of names when file name is names', function(){
     let expectedOut = "D\nE";
-    equal(organizeTail(readFileSync, existsSync, {option: '-n', value: 2, fileNames: ['names']}), expectedOut);
+    equal(organizeTail(readFileSync, existsSync, {option: '-n', value: 2, fileNames: ['names']}, command), expectedOut);
   });
   
   it('should return list of numbers when file name is numbers', function(){
     let expectedOut = "4\n5";
-    equal(organizeTail(readFileSync, existsSync, {option: '-n', value: 2, fileNames: ['numbers']}), expectedOut);
+    equal(organizeTail(readFileSync, existsSync, {option: '-n', value: 2, fileNames: ['numbers']}, command), expectedOut);
   });
 
   it('should return list of numbers and names when both files passed', function(){
     let expectedOut = "==> names <==\nD\nE\n\n==> numbers <==\n4\n5";
-    equal(organizeTail(readFileSync, existsSync, {option: '-n', value: 2, fileNames: ['names', 'numbers']}), expectedOut);
+    equal(organizeTail(readFileSync, existsSync, {option: '-n', value: 2, fileNames: ['names', 'numbers']}, command), expectedOut);
   });
 
   it("should return file not found log when file not found", function() {
     const expectedOut = "tail: abc: No such file or directory";
-    equal(organizeTail(readFileSync, existsSync, {option: '-n', value: 2, fileNames: ['abc']}), expectedOut);
+    equal(organizeTail(readFileSync, existsSync, {option: '-n', value: 2, fileNames: ['abc']}, command), expectedOut);
   });
   
   it("should return when invalid argument passed", function() {
     const expectedOut = "tail: illegal option -- -v\nusage: tail [-F | -f | -r] [-q] [-b # | -c # | -n #] [file ...]";
-    equal(organizeTail(readFileSync, existsSync, {option: '-v', value: 2, fileNames: ['abc']}), expectedOut);
+    equal(organizeTail(readFileSync, existsSync, {option: '-v', value: 2, fileNames: ['abc']}, command), expectedOut);
   });
 });

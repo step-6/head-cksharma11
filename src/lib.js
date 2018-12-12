@@ -34,17 +34,7 @@ const isSingleExistingFile = function(fileCount, content){
 }
 
 const head = function(contents, option, value, fileNames) {
-  const headOperation = headOperations[option];
-
-  if (isSingleExistingFile(fileNames.length, contents[0])) {
-    return [headOperation(contents[0],value)];
-  }
-
-  return zip(contents, fileNames).map(([content, fileName]) => {
-    if (content == null) return fileNotFoundLog(fileName, 'head');
-    let headResult = headOperation(content, value);
-    return addHeader(fileName, headResult);
-  });
+  return runCommand(contents, option, value, fileNames, 'head');
 };
 
 const organizeHead = function(
@@ -72,18 +62,6 @@ const getCharsFromTail = function(content, numOfChar){
 
 const tail = function(contents, option, value, fileNames) {
   return runCommand(contents, option, value, fileNames, 'tail');
-  // const absValue = Math.abs(value);
-  // const tailOperation = tailOperations[option];
-
-  // if (isSingleExistingFile(fileNames.length, contents[0])) {
-  //   return [tailOperation(contents[0],absValue)];
-  // }
-
-  // return zip(contents, fileNames).map(([content, fileName]) => {
-  //   if (content == null) return fileNotFoundLog(fileName, 'tail');
-  //   let tailResult = tailOperation(content, absValue);
-  //   return addHeader(fileName, tailResult);
-  // });
 };
 
 const organizeTail = function(

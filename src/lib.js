@@ -42,12 +42,7 @@ const organizeHead = function(
   checkExistence,
   { option, value, fileNames }
 ) {
-  const inputValidation = validateHeadInputs({ option, value, fileNames });
-  if (!inputValidation.isValid) return inputValidation.errorMessage;
-
-  const fileContents = getFileContents(reader, checkExistence, fileNames);
-  const result = head(fileContents, option, value, fileNames);
-  return result.join("\n\n");
+  return organizeResult(reader, checkExistence, {option, value, fileNames}, 'head');
 };
 
 const getLinesFromTail = function(content, numOfLines){
@@ -69,13 +64,7 @@ const organizeTail = function(
   checkExistence,
   { option, value, fileNames }
 ) {
-  const inputValidation = validateTailInputs({ option, value, fileNames });
-  if(value == 0) return '';  
-  if (!inputValidation.isValid) return inputValidation.errorMessage;
-
-  const fileContents = getFileContents(reader, checkExistence, fileNames);
-  const result = tail(fileContents, option, value, fileNames);
-  return result.join("\n\n");
+  return organizeResult(reader, checkExistence, {option, value, fileNames}, 'tail');
 };
 
 const runCommand = function(contents, option, value, fileNames, command){
@@ -91,11 +80,27 @@ const runCommand = function(contents, option, value, fileNames, command){
     let result = operation(content, value);
     return addHeader(fileName, result);
   });
+};
+
+const organizeResult = function(reader,
+  checkExistence, 
+  { option, value, fileNames },
+  command
+  ){
+  const inputValidation = validations[command]({ option, value, fileNames });
+  if (!inputValidation.isValid) return inputValidation.errorMessage;
+  if(value == 0) return '';  
+
+  const fileContents = getFileContents(reader, checkExistence, fileNames);
+  const result = commands[command](fileContents, option, value, fileNames);
+  return result.join("\n\n");
 }
 
 const headOperations = { "-n": getLinesFromHead, "-c": getCharsFromHead };
 const tailOperations = { "-n": getLinesFromTail, "-c": getCharsFromTail };
 const operations = { "head": headOperations, "tail": tailOperations };
+const validations = { "head": validateHeadInputs, "tail": validateTailInputs };
+const commands = { "head": head, "tail": tail };
 
 module.exports = {
   getLinesFromHead,

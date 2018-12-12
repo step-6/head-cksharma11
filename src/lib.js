@@ -71,18 +71,19 @@ const getCharsFromTail = function(content, numOfChar){
 }
 
 const tail = function(contents, option, value, fileNames) {
-  const absValue = Math.abs(value);
-  const tailOperation = tailOperations[option];
+  return runCommand(contents, option, value, fileNames, 'tail');
+  // const absValue = Math.abs(value);
+  // const tailOperation = tailOperations[option];
 
-  if (isSingleExistingFile(fileNames.length, contents[0])) {
-    return [tailOperation(contents[0],absValue)];
-  }
+  // if (isSingleExistingFile(fileNames.length, contents[0])) {
+  //   return [tailOperation(contents[0],absValue)];
+  // }
 
-  return zip(contents, fileNames).map(([content, fileName]) => {
-    if (content == null) return fileNotFoundLog(fileName, 'tail');
-    let tailResult = tailOperation(content, absValue);
-    return addHeader(fileName, tailResult);
-  });
+  // return zip(contents, fileNames).map(([content, fileName]) => {
+  //   if (content == null) return fileNotFoundLog(fileName, 'tail');
+  //   let tailResult = tailOperation(content, absValue);
+  //   return addHeader(fileName, tailResult);
+  // });
 };
 
 const organizeTail = function(
@@ -99,8 +100,24 @@ const organizeTail = function(
   return result.join("\n\n");
 };
 
+const runCommand = function(contents, option, value, fileNames, command){
+  if(command == 'tail') value = Math.abs(value);
+  const operation = operations[command][option];
+
+  if (isSingleExistingFile(fileNames.length, contents[0])) {
+    return [operation(contents[0],value)];
+  }
+
+  return zip(contents, fileNames).map(([content, fileName]) => {
+    if (content == null) return fileNotFoundLog(fileName, command);
+    let result = operation(content, value);
+    return addHeader(fileName, result);
+  });
+}
+
 const headOperations = { "-n": getLinesFromHead, "-c": getCharsFromHead };
 const tailOperations = { "-n": getLinesFromTail, "-c": getCharsFromTail };
+const operations = { "head": headOperations, "tail": tailOperations };
 
 module.exports = {
   getLinesFromHead,

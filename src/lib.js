@@ -1,15 +1,6 @@
 const { validateHeadInputs, validateTailInputs } = require("./inputValidation.js");
 const { zip } = require('./util.js');
 
-const getLinesFromHead = function(contents, numOfLines = 10) {
-  const separator = "\n";
-  return contents.split(separator, numOfLines).join(separator);
-};
-
-const getCharsFromHead = function(contents, numOfChar) {
-  return contents.substr(0, numOfChar);
-};
-
 const readFile = function(reader, path, encoding) {
   return reader(path, encoding);
 };
@@ -33,16 +24,13 @@ const isSingleExistingFile = function(fileCount, content){
   return fileCount == 1 && content != null;
 };
 
-const head = function(contents, option, value, fileNames) {
-  return runCommand(contents, option, value, fileNames, 'head');
+const getLinesFromHead = function(contents, numOfLines = 10) {
+  const separator = "\n";
+  return contents.split(separator, numOfLines).join(separator);
 };
 
-const organizeHead = function(
-  reader,
-  checkExistence,
-  { option, value, fileNames }
-) {
-  return organizeResult(reader, checkExistence, {option, value, fileNames}, 'head');
+const getCharsFromHead = function(contents, numOfChar) {
+  return contents.substr(0, numOfChar);
 };
 
 const getLinesFromTail = function(content, numOfLines){
@@ -55,8 +43,12 @@ const getCharsFromTail = function(content, numOfChar){
   return content.slice(-numOfChar);
 };
 
-const tail = function(contents, option, value, fileNames) {
-  return runCommand(contents, option, value, fileNames, 'tail');
+const organizeHead = function(
+  reader,
+  checkExistence,
+  { option, value, fileNames }
+) {
+  return organizeResult(reader, checkExistence, {option, value, fileNames}, 'head');
 };
 
 const organizeTail = function(
@@ -65,6 +57,14 @@ const organizeTail = function(
   { option, value, fileNames }
 ) {
   return organizeResult(reader, checkExistence, {option, value, fileNames}, 'tail');
+};
+
+const head = function(contents, option, value, fileNames) {
+  return runCommand(contents, option, value, fileNames, 'head');
+};
+
+const tail = function(contents, option, value, fileNames) {
+  return runCommand(contents, option, value, fileNames, 'tail');
 };
 
 const runCommand = function(contents, option, value, fileNames, command){

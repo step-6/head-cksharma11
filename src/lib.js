@@ -1,4 +1,4 @@
-const { validateHeadInputs, validateTailInputs } = require("./errorCheck.js");
+const { validateHeadInputs, validateTailInputs } = require("./inputValidation.js");
 const { zip } = require('./util.js');
 
 const getLinesFromHead = function(contents, numOfLines = 10) {

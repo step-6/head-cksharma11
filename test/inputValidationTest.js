@@ -1,5 +1,5 @@
 const { deepEqual } = require("assert");
-const { validateHeadInputs, validateTailInputs } = require("../src/errorCheck.js");
+const { validateHeadInputs, validateTailInputs } = require("../src/inputValidation.js");
 
 describe("validateHeadInputs", function() {
   it("should return (isValid: true) when input is valid", function() {

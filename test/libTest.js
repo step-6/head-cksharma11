@@ -201,10 +201,6 @@ const existsSync = function(fileName) {
 };
 
 describe("organizeHead", function() {
-  const identity = x => x;
-  const exists = x => true;
-  const testFile = "Line 1\n" + "Line 2\n" + "Line 3";
-
   it("should return list of names when file name is names", function() {
     const expectedOutput = "A\nB";
     const actualOutput = organizeHead(readFileSync, existsSync, {
@@ -240,10 +236,10 @@ describe("organizeHead", function() {
 
   it("should return error when option value is 0", function() {
     const expectedOutput = "head: illegal line count -- 0";
-    const actualOutput = organizeHead(identity, exists, {
+    const actualOutput = organizeHead(readFileSync, existsSync, {
       option: "-n",
       value: 0,
-      fileNames: ["file1"]
+      fileNames: ["numbers"]
     });
 
     equal(actualOutput, expectedOutput);
@@ -251,10 +247,10 @@ describe("organizeHead", function() {
 
   it("should return error when option negative value passed", function() {
     const expectedOutput = "head: illegal line count -- -1";
-    const actualOutput = organizeHead(identity, exists, {
+    const actualOutput = organizeHead(readFileSync, existsSync, {
       option: "-n",
       value: -1,
-      fileNames: ["file1"]
+      fileNames: ["numbers"]
     });
 
     equal(actualOutput, expectedOutput);
@@ -264,7 +260,7 @@ describe("organizeHead", function() {
     const expectedOutput =
       "head: option requires an argument -- n\n" +
       "usage: head [-n lines | -c bytes] [file ...]";
-    const actualOutput = organizeHead(identity, exists, {
+    const actualOutput = organizeHead(readFileSync, existsSync, {
       option: "-n",
       value: 1,
       fileNames: []
@@ -274,11 +270,11 @@ describe("organizeHead", function() {
   });
 
   it("should return n number of lines when single file is passed", function() {
-    const expectedOutput = "Line 1\n" + "Line 2";
-    const actualOutput = organizeHead(identity, exists, {
+    const expectedOutput = "1\n2";
+    const actualOutput = organizeHead(readFileSync, existsSync, {
       option: "-n",
       value: 2,
-      fileNames: [testFile]
+      fileNames: ["numbers"]
     });
 
     equal(actualOutput, expectedOutput);

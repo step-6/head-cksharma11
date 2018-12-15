@@ -185,11 +185,10 @@ describe("organizeHead", function() {
   const identity = x => x;
   const exists = x => true;
   const testFile = "Line 1\n" + "Line 2\n" + "Line 3";
-  const testWithTwoElement = "Line One\n" + "Line Two\n" + "Line Three";
   
   it('should return list of names when file name is names', function(){
-    let expectedOut = "A\nB";
-    equal(organizeHead(readFileSync, existsSync, {option: '-n', value: 2, fileNames: ['names']}), expectedOut);
+    let expectedOutput = "A\nB";
+    equal(organizeHead(readFileSync, existsSync, {option: '-n', value: 2, fileNames: ['names']}), expectedOutput);
   });
   
   it('should return list of numbers when file name is numbers', function(){

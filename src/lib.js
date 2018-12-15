@@ -106,6 +106,7 @@ module.exports = {
   getCharsFromHead,
   readFile,
   head,
+  tail,
   organizeHead,
   addHeader,
   fileNotFoundLog,

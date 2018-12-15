@@ -4,6 +4,7 @@ const {
   getCharsFromHead,
   readFile,
   head,
+  tail,
   addHeader,
   fileNotFoundLog,
   organizeHead,
@@ -338,8 +339,84 @@ describe( "organizeTail", function(){
     equal(organizeTail(readFileSync, existsSync, {option: '-n', value: 2, fileNames: ['abc']}), expectedOut);
   });
   
-  it("should return when invalid argument passed", function() {
+  it("should return error message when invalid argument passed", function() {
     const expectedOut = "tail: illegal option -- -v\nusage: tail [-F | -f | -r] [-q] [-b # | -c # | -n #] [file ...]";
     equal(organizeTail(readFileSync, existsSync, {option: '-v', value: 2, fileNames: ['abc']}), expectedOut);
+  });
+
+  it("should return empty string for count 0", function() {
+    const expectedOut = "";
+    equal(organizeTail(readFileSync, existsSync, {option: '-n', value: 0, fileNames: ['names']}), expectedOut);
+  });
+});
+
+describe("tail", function() {
+  it("should return default 10 lines for single file", function() {
+    const file =
+      "Line 1\n" +
+      "Line 2\n" +
+      "Line 3\n" +
+      "Line 4\n" +
+      "Line 5\n" +
+      "Line 6\n" +
+      "Line 7\n" +
+      "Line 8\n" +
+      "Line 9\n" +
+      "Line 10";
+    deepEqual(tail([file], "-n", 10, ["file"]), [file]);
+  });
+
+  it("should return number of input lines from tail with 2 files", function() {
+    const file1 =
+      "Line 1\n" +
+      "Line 2\n" +
+      "Line 3\n" +
+      "Line 4\n" +
+      "Line 5\n" +
+      "Line 6\n" +
+      "Line 7\n" +
+      "Line 8\n" +
+      "Line 9\n" +
+      "Line 10";
+    const file2 =
+      "File2 line 1\n" +
+      "File2 line 2\n" +
+      "File2 line 3\n" +
+      "File2 line 4\n" +
+      "File2 line 5\n" +
+      "File2 line 6";
+
+    const expectedOut = [
+      "==> file1 <==\nLine 8\nLine 9\nLine 10",
+      "==> file2 <==\nFile2 line 4\nFile2 line 5\nFile2 line 6"
+    ];
+
+    deepEqual(tail([file1, file2], "-n", 3, ["file1", "file2"]), expectedOut);
+  });
+
+  it("should return empty when no files passed", function() {
+    equal(tail([], "-n", 1, []), "");
+  });
+
+  it("should return file not found log for single null file", function() {
+    const nullFile = null;
+    const expectedOut = "tail: nullFile: No such file or directory";
+    equal(tail([nullFile], "-n", 1, ["nullFile"]), expectedOut);
+  });
+
+  it("should return file not found log when one file exists", function() {
+    const nullFile = null;
+    const fileWithContent = "File with content";
+    const expectedOut = [
+      "tail: nullFile: No such file or directory",
+      "==> fileWithContent <==\nFile with content"
+    ];
+    deepEqual(
+      tail([nullFile, fileWithContent], "-n", 1, [
+        "nullFile",
+        "fileWithContent"
+      ]),
+      expectedOut
+    );
   });
 });

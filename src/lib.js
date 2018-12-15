@@ -68,7 +68,6 @@ const tail = function(contents, option, value, fileNames) {
 };
 
 const runCommand = function(contents, option, value, fileNames, command){
-  if(command == 'tail') value = Math.abs(value);
   const operation = operations[command][option];
 
   if (isSingleExistingFile(fileNames.length, contents[0])) {

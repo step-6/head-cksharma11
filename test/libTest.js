@@ -37,18 +37,18 @@ describe("getLinesFromHead", function() {
   });
 
   it("should return 10 line as default", function() {
-    let expectedOut = "This is test file\n";
-    expectedOut += "This is line 2\n";
-    expectedOut += "This is line 3\n";
-    expectedOut += "This is line 4\n";
-    expectedOut += "This is line 5\n";
-    expectedOut += "This is line 6\n";
-    expectedOut += "This is line 7\n";
-    expectedOut += "This is line 8\n";
-    expectedOut += "This is line 9\n";
-    expectedOut += "This is line 10";
+    let expectedOutput = "This is test file\n";
+    expectedOutput += "This is line 2\n";
+    expectedOutput += "This is line 3\n";
+    expectedOutput += "This is line 4\n";
+    expectedOutput += "This is line 5\n";
+    expectedOutput += "This is line 6\n";
+    expectedOutput += "This is line 7\n";
+    expectedOutput += "This is line 8\n";
+    expectedOutput += "This is line 9\n";
+    expectedOutput += "This is line 10";
 
-    equal(getLinesFromHead(fileContents), expectedOut);
+    equal(getLinesFromHead(fileContents), expectedOutput);
   });
 });
 
@@ -107,12 +107,12 @@ describe("head", function() {
       "File2 line 5\n" +
       "File2 line 6";
 
-    const expectedOut = [
+    const expectedOutput = [
       "==> file1 <==\nLine 1\nLine 2\nLine 3",
       "==> file2 <==\nFile2 line 1\nFile2 line 2\nFile2 line 3"
     ];
 
-    deepEqual(head([file1, file2], "-n", 3, ["file1", "file2"]), expectedOut);
+    deepEqual(head([file1, file2], "-n", 3, ["file1", "file2"]), expectedOutput);
   });
 
   it("should return empty when no files passed", function() {
@@ -121,14 +121,14 @@ describe("head", function() {
 
   it("should return file not found log for single null file", function() {
     const nullFile = null;
-    const expectedOut = "head: nullFile: No such file or directory";
-    equal(head([nullFile], "-n", 1, ["nullFile"]), expectedOut);
+    const expectedOutput = "head: nullFile: No such file or directory";
+    equal(head([nullFile], "-n", 1, ["nullFile"]), expectedOutput);
   });
 
   it("should return file not found log when one file exists", function() {
     const nullFile = null;
     const fileWithContent = "File with content";
-    const expectedOut = [
+    const expectedOutput = [
       "head: nullFile: No such file or directory",
       "==> fileWithContent <==\nFile with content"
     ];
@@ -137,7 +137,7 @@ describe("head", function() {
         "nullFile",
         "fileWithContent"
       ]),
-      expectedOut
+      expectedOutput
     );
   });
 });
@@ -146,25 +146,25 @@ describe("addHeader", function() {
   it("should add header with passed contents", function() {
     const content = "This is sample file";
     const fileName = "Test.js";
-    const expectedOut = "==> Test.js <==\nThis is sample file";
+    const expectedOutput = "==> Test.js <==\nThis is sample file";
 
-    equal(addHeader(fileName, content), expectedOut);
+    equal(addHeader(fileName, content), expectedOutput);
   });
 });
 
 describe("fileNotFoundLog", function() {
   it("should return log when file not found (head)", function() {
     const fileName = "Test";
-    const expectedOut = "head: " + fileName + ": No such file or directory";
+    const expectedOutput = "head: " + fileName + ": No such file or directory";
 
-    equal(fileNotFoundLog(fileName, 'head'), expectedOut);
+    equal(fileNotFoundLog(fileName, 'head'), expectedOutput);
   });
 
   it("should return log when file not found (tail)", function() {
     const fileName = "Test";
-    const expectedOut = "tail: " + fileName + ": No such file or directory";
+    const expectedOutput = "tail: " + fileName + ": No such file or directory";
 
-    equal(fileNotFoundLog(fileName, 'tail'), expectedOut);
+    equal(fileNotFoundLog(fileName, 'tail'), expectedOutput);
   });
 });
 
@@ -192,51 +192,51 @@ describe("organizeHead", function() {
   });
   
   it('should return list of numbers when file name is numbers', function(){
-    let expectedOut = "1\n2";
-    equal(organizeHead(readFileSync, existsSync, {option: '-n', value: 2, fileNames: ['numbers']}), expectedOut);
+    let expectedOutput = "1\n2";
+    equal(organizeHead(readFileSync, existsSync, {option: '-n', value: 2, fileNames: ['numbers']}), expectedOutput);
   });
   
   it('should return list of numbers and names when both files passed', function(){
-    let expectedOut = "==> names <==\nA\nB\n\n==> numbers <==\n1\n2";
-    equal(organizeHead(readFileSync, existsSync, {option: '-n', value: 2, fileNames: ['names', 'numbers']}), expectedOut);
+    let expectedOutput = "==> names <==\nA\nB\n\n==> numbers <==\n1\n2";
+    equal(organizeHead(readFileSync, existsSync, {option: '-n', value: 2, fileNames: ['names', 'numbers']}), expectedOutput);
   });
   
   it("should return error when option value is 0", function() {
-    const expectedOut = "head: illegal line count -- 0";
+    const expectedOutput = "head: illegal line count -- 0";
     equal(
       organizeHead(identity, exists, {
         option: "-n",
         value: 0,
         fileNames: ["file1"]
       }),
-      expectedOut
+      expectedOutput
     );
   });
 
   it("should return error when option negative value passed", function() {
-    const expectedOut = "head: illegal line count -- -1";
+    const expectedOutput = "head: illegal line count -- -1";
     equal(
       organizeHead(identity, exists, {
         option: "-n",
         value: -1,
         fileNames: ["file1"]
       }),
-      expectedOut
+      expectedOutput
     );
   });
 
   it("should return error when length of fileNames is 0", function() {
-    const expectedOut =
+    const expectedOutput =
       "head: option requires an argument -- n\n" +
       "usage: head [-n lines | -c bytes] [file ...]";
     equal(
       organizeHead(identity, exists, { option: "-n", value: 1, fileNames: [] }),
-      expectedOut
+      expectedOutput
     );
   });
 
   it("should return n number of lines when single file is passed", function() {
-    const expectedOut = "Line 1\n" + "Line 2";
+    const expectedOutput = "Line 1\n" + "Line 2";
 
     equal(
       organizeHead(identity, exists, {
@@ -244,17 +244,12 @@ describe("organizeHead", function() {
         value: 2,
         fileNames: [testFile]
       }),
-      expectedOut
+      expectedOutput
     );
   });
 });
 
 describe("getFileContents", function() {
-  const identity = x => x;
-  const exists = x => true;
-  const notExists = x => false;
-
-  const testWithSingleInput = ["Line 1"];
   const testFile = ["Line 1\n", "Line 2\n", "Line 3"];
   const testWithTwoElement = [
     ["Line 1\n", "Line 2\n", "Line 3"],
@@ -262,40 +257,40 @@ describe("getFileContents", function() {
   ];
 
   it("should return null when file not found", function() {
-    const expectedOut = [null];
+    const expectedOutput = [null];
     deepEqual(
-      getFileContents(identity, notExists, testWithSingleInput),
-      expectedOut
+      getFileContents(readFileSync, existsSync, ['badFile']),
+      expectedOutput
     );
   });
 
   it("should return contents of one file", function() {
-    const expectedOut = testFile;
-    deepEqual(getFileContents(identity, exists, testFile), expectedOut);
+    const expectedOutput = [[1, 2, 3, 4, 5].join('\n')];
+    deepEqual(getFileContents(readFileSync, existsSync, ['numbers']), expectedOutput);
   });
 
   it("should return contents of two files", function() {
-    const expectedOut = testWithTwoElement;
+    const expectedOutput = [ '1\n2\n3\n4\n5', 'A\nB\nC\nD\nE' ];
     deepEqual(
-      getFileContents(identity, exists, testWithTwoElement),
-      expectedOut
+      getFileContents(readFileSync, existsSync, ['numbers', 'names']),
+      expectedOutput
     );
   });
 });
 
 describe("getLinesFromTail", function(){
   it("should return last line of content for 1 input", function(){
-    let testFile = 'A\nB\nC\nD';
+    let testFile = ['A', 'B', 'C', 'D'].join('\n');
     equal(getLinesFromTail(testFile, 1), 'D');
   });
   
   it("should retrun last two line of content for 2 input", function(){
-    let testFile = 'A\nB\nC\nD';
+    let testFile = ['A', 'B', 'C', 'D'].join('\n');
     equal(getLinesFromTail(testFile, 2), 'C\nD');
   });
   
   it("should return back file with input 0", function(){
-    let testFile = 'A\nB\nC\nD';
+    let testFile = ['A', 'B', 'C', 'D'].join('\n');
     equal(getLinesFromTail(testFile, 0), testFile);
   });
 });
@@ -319,33 +314,33 @@ describe("getCharsFromTail", function(){
 
 describe( "organizeTail", function(){
   it('should return list of names when file name is names', function(){
-    let expectedOut = "D\nE";
-    equal(organizeTail(readFileSync, existsSync, {option: '-n', value: 2, fileNames: ['names']}), expectedOut);
+    let expectedOutput = "D\nE";
+    equal(organizeTail(readFileSync, existsSync, {option: '-n', value: 2, fileNames: ['names']}), expectedOutput);
   });
   
   it('should return list of numbers when file name is numbers', function(){
-    let expectedOut = "4\n5";
-    equal(organizeTail(readFileSync, existsSync, {option: '-n', value: 2, fileNames: ['numbers']}), expectedOut);
+    let expectedOutput = "4\n5";
+    equal(organizeTail(readFileSync, existsSync, {option: '-n', value: 2, fileNames: ['numbers']}), expectedOutput);
   });
 
   it('should return list of numbers and names when both files passed', function(){
-    let expectedOut = "==> names <==\nD\nE\n\n==> numbers <==\n4\n5";
-    equal(organizeTail(readFileSync, existsSync, {option: '-n', value: 2, fileNames: ['names', 'numbers']}), expectedOut);
+    let expectedOutput = "==> names <==\nD\nE\n\n==> numbers <==\n4\n5";
+    equal(organizeTail(readFileSync, existsSync, {option: '-n', value: 2, fileNames: ['names', 'numbers']}), expectedOutput);
   });
 
   it("should return file not found log when file not found", function() {
-    const expectedOut = "tail: abc: No such file or directory";
-    equal(organizeTail(readFileSync, existsSync, {option: '-n', value: 2, fileNames: ['abc']}), expectedOut);
+    const expectedOutput = "tail: abc: No such file or directory";
+    equal(organizeTail(readFileSync, existsSync, {option: '-n', value: 2, fileNames: ['abc']}), expectedOutput);
   });
   
   it("should return error message when invalid argument passed", function() {
-    const expectedOut = "tail: illegal option -- -v\nusage: tail [-F | -f | -r] [-q] [-b # | -c # | -n #] [file ...]";
-    equal(organizeTail(readFileSync, existsSync, {option: '-v', value: 2, fileNames: ['abc']}), expectedOut);
+    const expectedOutput = "tail: illegal option -- -v\nusage: tail [-F | -f | -r] [-q] [-b # | -c # | -n #] [file ...]";
+    equal(organizeTail(readFileSync, existsSync, {option: '-v', value: 2, fileNames: ['abc']}), expectedOutput);
   });
 
   it("should return empty string for count 0", function() {
-    const expectedOut = "";
-    equal(organizeTail(readFileSync, existsSync, {option: '-n', value: 0, fileNames: ['names']}), expectedOut);
+    const expectedOutput = "";
+    equal(organizeTail(readFileSync, existsSync, {option: '-n', value: 0, fileNames: ['names']}), expectedOutput);
   });
 });
 
@@ -385,12 +380,12 @@ describe("tail", function() {
       "File2 line 5\n" +
       "File2 line 6";
 
-    const expectedOut = [
+    const expectedOutput = [
       "==> file1 <==\nLine 8\nLine 9\nLine 10",
       "==> file2 <==\nFile2 line 4\nFile2 line 5\nFile2 line 6"
     ];
 
-    deepEqual(tail([file1, file2], "-n", 3, ["file1", "file2"]), expectedOut);
+    deepEqual(tail([file1, file2], "-n", 3, ["file1", "file2"]), expectedOutput);
   });
 
   it("should return empty when no files passed", function() {
@@ -399,14 +394,14 @@ describe("tail", function() {
 
   it("should return file not found log for single null file", function() {
     const nullFile = null;
-    const expectedOut = "tail: nullFile: No such file or directory";
-    equal(tail([nullFile], "-n", 1, ["nullFile"]), expectedOut);
+    const expectedOutput = "tail: nullFile: No such file or directory";
+    equal(tail([nullFile], "-n", 1, ["nullFile"]), expectedOutput);
   });
 
   it("should return file not found log when one file exists", function() {
     const nullFile = null;
     const fileWithContent = "File with content";
-    const expectedOut = [
+    const expectedOutput = [
       "tail: nullFile: No such file or directory",
       "==> fileWithContent <==\nFile with content"
     ];
@@ -415,7 +410,7 @@ describe("tail", function() {
         "nullFile",
         "fileWithContent"
       ]),
-      expectedOut
+      expectedOutput
     );
   });
 });

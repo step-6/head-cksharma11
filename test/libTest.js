@@ -1,4 +1,4 @@
-const { equal, deepEqual } = require("assert");
+const assert = require("assert");
 const {
   getLinesFromHead,
   getCharsFromHead,
@@ -15,7 +15,7 @@ const {
 } = require("../src/lib.js");
 
 describe("getLinesFromHead", function() {
-  let fileContents = [
+  const fileContents = [
     "This is test file",
     "This is line 2",
     "This is line 3",
@@ -31,15 +31,15 @@ describe("getLinesFromHead", function() {
   ].join("\n");
 
   it("should return empty string with input 0", function() {
-    equal(getLinesFromHead(fileContents, 0), "");
+    assert.equal(getLinesFromHead(fileContents, 0), "");
   });
 
   it("should return 1 line with input 1", function() {
-    equal(getLinesFromHead(fileContents, 1), "This is test file");
+    assert.equal(getLinesFromHead(fileContents, 1), "This is test file");
   });
 
   it("should return 10 line as default", function() {
-    let expectedOutput = [
+    const expectedOutput = [
       "This is test file",
       "This is line 2",
       "This is line 3",
@@ -52,7 +52,7 @@ describe("getLinesFromHead", function() {
       "This is line 10"
     ].join("\n");
 
-    equal(getLinesFromHead(fileContents), expectedOutput);
+    assert.equal(getLinesFromHead(fileContents), expectedOutput);
   });
 });
 
@@ -60,18 +60,18 @@ describe("getCharsFromHead", function() {
   const fileContents = "This is a test file.";
 
   it("should return empty string with n = 0", function() {
-    equal(getCharsFromHead(fileContents, 0), "");
+    assert.equal(getCharsFromHead(fileContents, 0), "");
   });
 
   it("should return first 5 characters of contents with n = 5", function() {
-    equal(getCharsFromHead(fileContents, 5), "This ");
+    assert.equal(getCharsFromHead(fileContents, 5), "This ");
   });
 });
 
 describe("readFile", function() {
   const add = (a, b) => a + b;
   it("should call given function with arg1 and arg2", function() {
-    equal(readFile(add, 5, 5), 10);
+    assert.equal(readFile(add, 5, 5), 10);
   });
 });
 
@@ -90,7 +90,7 @@ describe("head", function() {
       "Line 10"
     ].join("\n");
 
-    deepEqual(head([file], "-n", 10, ["file"]), [file]);
+    assert.deepEqual(head([file], "-n", 10, ["file"]), [file]);
   });
 
   it("should return number of input lines with 2 files", function() {
@@ -127,19 +127,19 @@ File2 line 3`
     ];
 
     const actualOutput = head([file1, file2], "-n", 3, ["file1", "file2"]);
-    deepEqual(actualOutput, expectedOutput);
+    assert.deepEqual(actualOutput, expectedOutput);
   });
 
   it("should return empty when no files passed", function() {
     const actualOutput = head([], "-n", 1, []);
-    equal(actualOutput, "");
+    assert.equal(actualOutput, "");
   });
 
   it("should return file not found log for single null file", function() {
     const nullFile = null;
     const expectedOutput = "head: nullFile: No such file or directory";
     const actualOutput = head([nullFile], "-n", 1, ["nullFile"]);
-    equal(actualOutput, expectedOutput);
+    assert.equal(actualOutput, expectedOutput);
   });
 
   it("should return file not found log when one file exists", function() {
@@ -154,7 +154,7 @@ File2 line 3`
       "fileWithContent"
     ]);
 
-    deepEqual(actualOutput, expectedOutput);
+    assert.deepEqual(actualOutput, expectedOutput);
   });
 });
 
@@ -165,7 +165,7 @@ describe("addHeader", function() {
     const expectedOutput = "==> Test.js <==\nThis is sample file";
     const actualOutput = addHeader(fileName, content);
 
-    equal(actualOutput, expectedOutput);
+    assert.equal(actualOutput, expectedOutput);
   });
 });
 
@@ -175,7 +175,7 @@ describe("fileNotFoundLog", function() {
     const expectedOutput = "head: " + fileName + ": No such file or directory";
     const actualOutput = fileNotFoundLog(fileName, "head");
 
-    equal(actualOutput, expectedOutput);
+    assert.equal(actualOutput, expectedOutput);
   });
 
   it("should return log when file not found (tail)", function() {
@@ -183,7 +183,7 @@ describe("fileNotFoundLog", function() {
     const expectedOutput = "tail: " + fileName + ": No such file or directory";
     const actualOutput = fileNotFoundLog(fileName, "tail");
 
-    equal(actualOutput, expectedOutput);
+    assert.equal(actualOutput, expectedOutput);
   });
 });
 
@@ -209,7 +209,7 @@ describe("organizeHead", function() {
       fileNames: ["names"]
     });
 
-    equal(actualOutput, expectedOutput);
+    assert.equal(actualOutput, expectedOutput);
   });
 
   it("should return list of numbers when file name is numbers", function() {
@@ -220,7 +220,7 @@ describe("organizeHead", function() {
       fileNames: ["numbers"]
     });
 
-    equal(actualOutput, expectedOutput);
+    assert.equal(actualOutput, expectedOutput);
   });
 
   it("should return list of numbers and names when both files passed", function() {
@@ -231,7 +231,7 @@ describe("organizeHead", function() {
       fileNames: ["names", "numbers"]
     });
 
-    equal(actualOutput, expectedOutput);
+    assert.equal(actualOutput, expectedOutput);
   });
 
   it("should return error when option value is 0", function() {
@@ -242,7 +242,7 @@ describe("organizeHead", function() {
       fileNames: ["numbers"]
     });
 
-    equal(actualOutput, expectedOutput);
+    assert.equal(actualOutput, expectedOutput);
   });
 
   it("should return error when option negative value passed", function() {
@@ -253,7 +253,7 @@ describe("organizeHead", function() {
       fileNames: ["numbers"]
     });
 
-    equal(actualOutput, expectedOutput);
+    assert.equal(actualOutput, expectedOutput);
   });
 
   it("should return error when length of fileNames is 0", function() {
@@ -266,7 +266,7 @@ describe("organizeHead", function() {
       fileNames: []
     });
 
-    equal(actualOutput, expectedOutput);
+    assert.equal(actualOutput, expectedOutput);
   });
 
   it("should return n number of lines when single file is passed", function() {
@@ -277,7 +277,7 @@ describe("organizeHead", function() {
       fileNames: ["numbers"]
     });
 
-    equal(actualOutput, expectedOutput);
+    assert.equal(actualOutput, expectedOutput);
   });
 });
 
@@ -286,14 +286,14 @@ describe("getFileContents", function() {
     const expectedOutput = [null];
     const actualOutput = getFileContents(readFileSync, existsSync, ["badFile"]);
 
-    deepEqual(actualOutput, expectedOutput);
+    assert.deepEqual(actualOutput, expectedOutput);
   });
 
   it("should return contents of one file", function() {
     const expectedOutput = [[1, 2, 3, 4, 5].join("\n")];
     const actualOutput = getFileContents(readFileSync, existsSync, ["numbers"]);
 
-    deepEqual(actualOutput, expectedOutput);
+    assert.deepEqual(actualOutput, expectedOutput);
   });
 
   it("should return contents of two files", function() {
@@ -303,7 +303,7 @@ describe("getFileContents", function() {
       "names"
     ]);
 
-    deepEqual(actualOutput, expectedOutput);
+    assert.deepEqual(actualOutput, expectedOutput);
   });
 });
 
@@ -312,21 +312,21 @@ describe("getLinesFromTail", function() {
     const testFile = ["A", "B", "C", "D"].join("\n");
     const actualOutput = getLinesFromTail(testFile, 1);
 
-    equal(actualOutput, "D");
+    assert.equal(actualOutput, "D");
   });
 
   it("should retrun last two line of content for 2 input", function() {
     const testFile = ["A", "B", "C", "D"].join("\n");
     const actualOutput = getLinesFromTail(testFile, 2);
 
-    equal(actualOutput, "C\nD");
+    assert.equal(actualOutput, "C\nD");
   });
 
   it("should return back file with input 0", function() {
     const testFile = ["A", "B", "C", "D"].join("\n");
     const actualOutput = getLinesFromTail(testFile, 0);
 
-    equal(actualOutput, testFile);
+    assert.equal(actualOutput, testFile);
   });
 });
 
@@ -335,21 +335,21 @@ describe("getCharsFromTail", function() {
     const testFile = "abcd";
     const actualOutput = getCharsFromTail(testFile, 1);
 
-    equal(actualOutput, "d");
+    assert.equal(actualOutput, "d");
   });
 
   it("should last 2 characters when input is 2", function() {
     const testFile = "1234\n5678";
     const actualOutput = getCharsFromTail(testFile, 2);
 
-    equal(actualOutput, "78");
+    assert.equal(actualOutput, "78");
   });
 
   it("should return back file with input 0", function() {
     const testFile = "abcd";
     const actualOutput = getCharsFromTail(testFile, 0);
 
-    equal(actualOutput, testFile);
+    assert.equal(actualOutput, testFile);
   });
 });
 
@@ -362,7 +362,7 @@ describe("organizeTail", function() {
       fileNames: ["names"]
     });
 
-    equal(actualOutput, expectedOutput);
+    assert.equal(actualOutput, expectedOutput);
   });
 
   it("should return list of numbers when file name is numbers", function() {
@@ -373,7 +373,7 @@ describe("organizeTail", function() {
       fileNames: ["numbers"]
     });
 
-    equal(actualOutput, expectedOutput);
+    assert.equal(actualOutput, expectedOutput);
   });
 
   it("should return list of numbers and names when both files passed", function() {
@@ -384,7 +384,7 @@ describe("organizeTail", function() {
       fileNames: ["names", "numbers"]
     });
 
-    equal(actualOutput, expectedOutput);
+    assert.equal(actualOutput, expectedOutput);
   });
 
   it("should return file not found log when file not found", function() {
@@ -395,7 +395,7 @@ describe("organizeTail", function() {
       fileNames: ["abc"]
     });
 
-    equal(actualOutput, expectedOutput);
+    assert.equal(actualOutput, expectedOutput);
   });
 
   it("should return error message when invalid argument passed", function() {
@@ -407,7 +407,7 @@ describe("organizeTail", function() {
       fileNames: ["abc"]
     });
 
-    equal(actualOutput, expectedOutput);
+    assert.equal(actualOutput, expectedOutput);
   });
 
   it("should return empty string for count 0", function() {
@@ -418,7 +418,7 @@ describe("organizeTail", function() {
       fileNames: ["names"]
     });
 
-    equal(actualOutput, expectedOutput);
+    assert.equal(actualOutput, expectedOutput);
   });
 });
 
@@ -439,7 +439,7 @@ describe("tail", function() {
 
     const actualOutput = tail([file], "-n", 10, ["file"]);
 
-    deepEqual(actualOutput, [file]);
+    assert.deepEqual(actualOutput, [file]);
   });
 
   it("should return number of input lines from tail with 2 files", function() {
@@ -471,12 +471,12 @@ describe("tail", function() {
 
     const actualOutput = tail([file1, file2], "-n", 3, ["file1", "file2"]);
 
-    deepEqual(actualOutput, expectedOutput);
+    assert.deepEqual(actualOutput, expectedOutput);
   });
 
   it("should return empty when no files passed", function() {
     const actualOutput = tail([], "-n", 1, []);
-    equal(actualOutput, "");
+    assert.equal(actualOutput, "");
   });
 
   it("should return file not found log for single null file", function() {
@@ -484,7 +484,7 @@ describe("tail", function() {
     const expectedOutput = "tail: nullFile: No such file or directory";
     const actualOutput = tail([nullFile], "-n", 1, ["nullFile"]);
 
-    equal(actualOutput, expectedOutput);
+    assert.equal(actualOutput, expectedOutput);
   });
 
   it("should return file not found log when one file exists", function() {
@@ -500,6 +500,6 @@ describe("tail", function() {
       "fileWithContent"
     ]);
 
-    deepEqual(actualOutput, expectedOutput);
+    assert.deepEqual(actualOutput, expectedOutput);
   });
 });

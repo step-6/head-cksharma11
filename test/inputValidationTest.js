@@ -1,24 +1,33 @@
-const { deepEqual } = require("assert");
-const { validateHeadInputs, validateTailInputs } = require("../src/inputValidation.js");
+const assert = require("assert");
+const {
+  validateHeadInputs,
+  validateTailInputs
+} = require("../src/inputValidation.js");
 
 describe("validateHeadInputs", function() {
   it("should return (isValid: true) when input is valid", function() {
     const expectedOutput = { isValid: true, errorMessage: "" };
-    deepEqual(
-      validateHeadInputs({ option: "-n", value: 10, fileNames: ["file"] }),
-      expectedOutput
-    );
+    const actualOutput = validateHeadInputs({
+      option: "-n",
+      value: 10,
+      fileNames: ["file"]
+    });
+
+    assert.deepEqual(actualOutput, expectedOutput);
   });
 
   it("should return error message when value is 0 and option is -n", function() {
     const expectedOutput = {
-      isValid: false, 
+      isValid: false,
       errorMessage: "head: illegal line count -- 0"
     };
-    deepEqual(
-      validateHeadInputs({ option: "-n", value: 0, fileNames: ["file"] }),
-      expectedOutput
-    );
+    const actualOutput = validateHeadInputs({
+      option: "-n",
+      value: 0,
+      fileNames: ["file"]
+    });
+
+    assert.deepEqual(actualOutput, expectedOutput);
   });
 
   it("should return error message when value is 0 and option is -c", function() {
@@ -26,10 +35,13 @@ describe("validateHeadInputs", function() {
       isValid: false,
       errorMessage: "head: illegal byte count -- 0"
     };
-    deepEqual(
-      validateHeadInputs({ option: "-c", value: 0, fileNames: ["file"] }),
-      expectedOutput
-    );
+    const actualOutput = validateHeadInputs({
+      option: "-c",
+      value: 0,
+      fileNames: ["file"]
+    });
+
+    assert.deepEqual(actualOutput, expectedOutput);
   });
 
   it("should return error message when number of files is 0", function() {
@@ -38,10 +50,13 @@ describe("validateHeadInputs", function() {
       errorMessage:
         "head: option requires an argument -- c\nusage: head [-n lines | -c bytes] [file ...]"
     };
-    deepEqual(
-      validateHeadInputs({ option: "-c", value: 10, fileNames: [] }),
-      expectedOutput
-    );
+    const actualOutput = validateHeadInputs({
+      option: "-c",
+      value: 10,
+      fileNames: []
+    });
+
+    assert.deepEqual(actualOutput, expectedOutput);
   });
 
   it("should return error message for invalid option", function() {
@@ -50,31 +65,44 @@ describe("validateHeadInputs", function() {
       errorMessage:
         "head: illegal option -- -v\nusage: head [-n lines | -c bytes] [file ...]"
     };
-    deepEqual(
-      validateHeadInputs({ option: "-v", value: 10, fileNames: [] }),
-      expectedOutput
-    );
+    const actualOutput = validateHeadInputs({
+      option: "-v",
+      value: 10,
+      fileNames: []
+    });
+
+    assert.deepEqual(actualOutput, expectedOutput);
   });
 });
 
-describe("validateTailInputs", function(){
-  it("should return error message for invalid option", function(){
+describe("validateTailInputs", function() {
+  it("should return error message for invalid option", function() {
     const expectedOutput = {
       isValid: false,
       errorMessage:
-      "tail: illegal option -- -v\n"+
-      "usage: tail [-F | -f | -r] [-q] [-b # | -c # | -n #] [file ...]"
+        "tail: illegal option -- -v\n" +
+        "usage: tail [-F | -f | -r] [-q] [-b # | -c # | -n #] [file ...]"
     };
+    const actualOutput = validateTailInputs({
+      option: "-v",
+      value: 10,
+      fileNames: []
+    });
 
-    deepEqual(validateTailInputs({ option: "-v", value: 10, fileNames: [] }), expectedOutput );
+    assert.deepEqual(actualOutput, expectedOutput);
   });
 
-  it("should return error message for invalid count", function(){
+  it("should return error message for invalid count", function() {
     const expectedOutput = {
       isValid: false,
-      errorMessage: "tail: illegal offset -- a" 
+      errorMessage: "tail: illegal offset -- a"
     };
-    
-    deepEqual(validateTailInputs({ option: "-n", value: 'a', fileNames: [] }), expectedOutput );
+    const actualOutput = validateTailInputs({
+      option: "-n",
+      value: "a",
+      fileNames: []
+    });
+
+    assert.deepEqual(actualOutput, expectedOutput);
   });
 });

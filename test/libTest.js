@@ -15,18 +15,18 @@ const {
 } = require("../src/lib.js");
 
 describe("getLinesFromHead", function() {
-  let fileContents = "This is test file\n";
-  fileContents += "This is line 2\n";
-  fileContents += "This is line 3\n";
-  fileContents += "This is line 4\n";
-  fileContents += "This is line 5\n";
-  fileContents += "This is line 6\n";
-  fileContents += "This is line 7\n";
-  fileContents += "This is line 8\n";
-  fileContents += "This is line 9\n";
-  fileContents += "This is line 10\n";
-  fileContents += "This is line 11\n";
-  fileContents += "This is line 12\n";
+  let fileContents = [ "This is test file",
+   "This is line 2",
+   "This is line 3",
+   "This is line 4",
+   "This is line 5",
+   "This is line 6",
+   "This is line 7",
+   "This is line 8",
+   "This is line 9",
+   "This is line 10",
+   "This is line 11",
+   "This is line 12\n" ].join('\n');
 
   it("should return empty string with input 0", function() {
     equal(getLinesFromHead(fileContents, 0), "");
@@ -37,16 +37,16 @@ describe("getLinesFromHead", function() {
   });
 
   it("should return 10 line as default", function() {
-    let expectedOutput = "This is test file\n";
-    expectedOutput += "This is line 2\n";
-    expectedOutput += "This is line 3\n";
-    expectedOutput += "This is line 4\n";
-    expectedOutput += "This is line 5\n";
-    expectedOutput += "This is line 6\n";
-    expectedOutput += "This is line 7\n";
-    expectedOutput += "This is line 8\n";
-    expectedOutput += "This is line 9\n";
-    expectedOutput += "This is line 10";
+    let expectedOutput = ["This is test file",
+     "This is line 2",
+     "This is line 3",
+     "This is line 4",
+     "This is line 5",
+     "This is line 6",
+     "This is line 7",
+     "This is line 8",
+     "This is line 9",
+     "This is line 10",].join('\n');
 
     equal(getLinesFromHead(fileContents), expectedOutput);
   });
@@ -74,43 +74,49 @@ describe("readFile", function() {
 describe("head", function() {
   it("should return default 10 lines for single file", function() {
     const file =
-      "Line 1\n" +
-      "Line 2\n" +
-      "Line 3\n" +
-      "Line 4\n" +
-      "Line 5\n" +
-      "Line 6\n" +
-      "Line 7\n" +
-      "Line 8\n" +
-      "Line 9\n" +
-      "Line 10";
+     [ "Line 1",
+      "Line 2",
+      "Line 3",
+      "Line 4",
+      "Line 5",
+      "Line 6",
+      "Line 7",
+      "Line 8",
+      "Line 9",
+      "Line 10" ].join('\n');
+
     deepEqual(head([file], "-n", 10, ["file"]), [file]);
   });
 
   it("should return number of input lines with 2 files", function() {
     const file1 =
-      "Line 1\n" +
-      "Line 2\n" +
-      "Line 3\n" +
-      "Line 4\n" +
-      "Line 5\n" +
-      "Line 6\n" +
-      "Line 7\n" +
-      "Line 8\n" +
-      "Line 9\n" +
-      "Line 10";
+     ["Line 1",
+      "Line 2",
+      "Line 3",
+      "Line 4",
+      "Line 5",
+      "Line 6",
+      "Line 7",
+      "Line 8",
+      "Line 9",
+      "Line 10"].join('\n');
     const file2 =
-      "File2 line 1\n" +
-      "File2 line 2\n" +
-      "File2 line 3\n" +
-      "File2 line 4\n" +
-      "File2 line 5\n" +
-      "File2 line 6";
+     ["File2 line 1",
+      "File2 line 2",
+      "File2 line 3",
+      "File2 line 4",
+      "File2 line 5",
+      "File2 line 6"].join('\n');
 
     const expectedOutput = [
-      "==> file1 <==\nLine 1\nLine 2\nLine 3",
-      "==> file2 <==\nFile2 line 1\nFile2 line 2\nFile2 line 3"
-    ];
+`==> file1 <==
+Line 1
+Line 2
+Line 3`,
+`==> file2 <==
+File2 line 1
+File2 line 2
+File2 line 3`];
 
     deepEqual(head([file1, file2], "-n", 3, ["file1", "file2"]), expectedOutput);
   });

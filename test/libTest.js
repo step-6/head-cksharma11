@@ -2,7 +2,6 @@ const assert = require("assert");
 const {
   getLinesFromHead,
   getCharsFromHead,
-  readFile,
   head,
   tail,
   addHeader,
@@ -65,13 +64,6 @@ describe("getCharsFromHead", function() {
 
   it("should return first 5 characters of contents with n = 5", function() {
     assert.equal(getCharsFromHead(fileContents, 5), "This ");
-  });
-});
-
-describe("readFile", function() {
-  const add = (a, b) => a + b;
-  it("should call given function with arg1 and arg2", function() {
-    assert.equal(readFile(add, 5, 5), 10);
   });
 });
 
@@ -200,10 +192,12 @@ const existsSync = function(fileName) {
   return fileNames.includes(fileName);
 };
 
+const fs = { readFileSync, existsSync };
+
 describe("organizeHead", function() {
   it("should return list of names when file name is names", function() {
     const expectedOutput = "A\nB";
-    const actualOutput = organizeHead(readFileSync, existsSync, {
+    const actualOutput = organizeHead(fs, {
       option: "-n",
       value: 2,
       fileNames: ["names"]
@@ -214,7 +208,7 @@ describe("organizeHead", function() {
 
   it("should return list of numbers when file name is numbers", function() {
     const expectedOutput = "1\n2";
-    const actualOutput = organizeHead(readFileSync, existsSync, {
+    const actualOutput = organizeHead(fs, {
       option: "-n",
       value: 2,
       fileNames: ["numbers"]
@@ -225,7 +219,7 @@ describe("organizeHead", function() {
 
   it("should return list of numbers and names when both files passed", function() {
     const expectedOutput = "==> names <==\nA\nB\n\n==> numbers <==\n1\n2";
-    const actualOutput = organizeHead(readFileSync, existsSync, {
+    const actualOutput = organizeHead(fs, {
       option: "-n",
       value: 2,
       fileNames: ["names", "numbers"]
@@ -236,7 +230,7 @@ describe("organizeHead", function() {
 
   it("should return error when option value is 0", function() {
     const expectedOutput = "head: illegal line count -- 0";
-    const actualOutput = organizeHead(readFileSync, existsSync, {
+    const actualOutput = organizeHead(fs, {
       option: "-n",
       value: 0,
       fileNames: ["numbers"]
@@ -247,7 +241,7 @@ describe("organizeHead", function() {
 
   it("should return error when option negative value passed", function() {
     const expectedOutput = "head: illegal line count -- -1";
-    const actualOutput = organizeHead(readFileSync, existsSync, {
+    const actualOutput = organizeHead(fs, {
       option: "-n",
       value: -1,
       fileNames: ["numbers"]
@@ -260,7 +254,7 @@ describe("organizeHead", function() {
     const expectedOutput =
       "head: option requires an argument -- n\n" +
       "usage: head [-n lines | -c bytes] [file ...]";
-    const actualOutput = organizeHead(readFileSync, existsSync, {
+    const actualOutput = organizeHead(fs, {
       option: "-n",
       value: 1,
       fileNames: []
@@ -271,7 +265,7 @@ describe("organizeHead", function() {
 
   it("should return n number of lines when single file is passed", function() {
     const expectedOutput = "1\n2";
-    const actualOutput = organizeHead(readFileSync, existsSync, {
+    const actualOutput = organizeHead(fs, {
       option: "-n",
       value: 2,
       fileNames: ["numbers"]
@@ -284,24 +278,21 @@ describe("organizeHead", function() {
 describe("getFileContents", function() {
   it("should return null when file not found", function() {
     const expectedOutput = [null];
-    const actualOutput = getFileContents(readFileSync, existsSync, ["badFile"]);
+    const actualOutput = getFileContents(fs, ["badFile"]);
 
     assert.deepEqual(actualOutput, expectedOutput);
   });
 
   it("should return contents of one file", function() {
     const expectedOutput = [[1, 2, 3, 4, 5].join("\n")];
-    const actualOutput = getFileContents(readFileSync, existsSync, ["numbers"]);
+    const actualOutput = getFileContents(fs, ["numbers"]);
 
     assert.deepEqual(actualOutput, expectedOutput);
   });
 
   it("should return contents of two files", function() {
     const expectedOutput = ["1\n2\n3\n4\n5", "A\nB\nC\nD\nE"];
-    const actualOutput = getFileContents(readFileSync, existsSync, [
-      "numbers",
-      "names"
-    ]);
+    const actualOutput = getFileContents(fs, ["numbers", "names"]);
 
     assert.deepEqual(actualOutput, expectedOutput);
   });
@@ -356,7 +347,7 @@ describe("getCharsFromTail", function() {
 describe("organizeTail", function() {
   it("should return list of names when file name is names", function() {
     const expectedOutput = "D\nE";
-    const actualOutput = organizeTail(readFileSync, existsSync, {
+    const actualOutput = organizeTail(fs, {
       option: "-n",
       value: 2,
       fileNames: ["names"]
@@ -367,7 +358,7 @@ describe("organizeTail", function() {
 
   it("should return list of numbers when file name is numbers", function() {
     const expectedOutput = "4\n5";
-    const actualOutput = organizeTail(readFileSync, existsSync, {
+    const actualOutput = organizeTail(fs, {
       option: "-n",
       value: 2,
       fileNames: ["numbers"]
@@ -378,7 +369,7 @@ describe("organizeTail", function() {
 
   it("should return list of numbers and names when both files passed", function() {
     const expectedOutput = "==> names <==\nD\nE\n\n==> numbers <==\n4\n5";
-    const actualOutput = organizeTail(readFileSync, existsSync, {
+    const actualOutput = organizeTail(fs, {
       option: "-n",
       value: 2,
       fileNames: ["names", "numbers"]
@@ -389,7 +380,7 @@ describe("organizeTail", function() {
 
   it("should return file not found log when file not found", function() {
     const expectedOutput = "tail: abc: No such file or directory";
-    const actualOutput = organizeTail(readFileSync, existsSync, {
+    const actualOutput = organizeTail(fs, {
       option: "-n",
       value: 2,
       fileNames: ["abc"]
@@ -401,7 +392,7 @@ describe("organizeTail", function() {
   it("should return error message when invalid argument passed", function() {
     const expectedOutput =
       "tail: illegal option -- -v\nusage: tail [-F | -f | -r] [-q] [-b # | -c # | -n #] [file ...]";
-    const actualOutput = organizeTail(readFileSync, existsSync, {
+    const actualOutput = organizeTail(fs, {
       option: "-v",
       value: 2,
       fileNames: ["abc"]
@@ -412,7 +403,7 @@ describe("organizeTail", function() {
 
   it("should return empty string for count 0", function() {
     const expectedOutput = "";
-    const actualOutput = organizeTail(readFileSync, existsSync, {
+    const actualOutput = organizeTail(fs, {
       option: "-n",
       value: 0,
       fileNames: ["names"]

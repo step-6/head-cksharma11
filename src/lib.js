@@ -4,10 +4,6 @@ const {
 } = require("./inputValidation.js");
 const { zip } = require("./util.js");
 
-// const readFile = function(reader, path, encoding) {
-//   return reader(path, encoding);
-// };
-
 const fileNotFoundLog = function(fileName, command) {
   return command + ": " + fileName + ": No such file or directory";
 };

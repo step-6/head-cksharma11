@@ -1,9 +1,9 @@
 const assert = require("assert");
 const { parseInputs } = require("../src/headIO.js");
 
-describe("parseInputs", function() {
-  describe("should categorize inputs and return object", function() {
-    it("with option as -n", function() {
+describe("parseInputs", () => {
+  describe("should categorize inputs and return object", () => {
+    it("with option as -n", () => {
       const userArgs = ["-n5", "file1"];
       const expectedOutput = {
         option: "-n",
@@ -14,7 +14,7 @@ describe("parseInputs", function() {
       assert.deepEqual(parseInputs(userArgs), expectedOutput);
     });
 
-    it("with option as -c", function() {
+    it("with option as -c", () => {
       const userArgs = ["-c5", "file1"];
       const expectedOutput = {
         option: "-c",
@@ -25,7 +25,7 @@ describe("parseInputs", function() {
       assert.deepEqual(parseInputs(userArgs), expectedOutput);
     });
 
-    it("with default values", function() {
+    it("with default values", () => {
       const userArgs = ["file1"];
       const expectedOutput = {
         option: "-n",
@@ -36,7 +36,7 @@ describe("parseInputs", function() {
       assert.deepEqual(parseInputs(userArgs), expectedOutput);
     });
 
-    it("without passing option i.e. -11", function() {
+    it("without passing option i.e. -11", () => {
       const userArgs = ["-11", "file1"];
       const expectedOutput = {
         option: "-n",
@@ -47,7 +47,7 @@ describe("parseInputs", function() {
       assert.deepEqual(parseInputs(userArgs), expectedOutput);
     });
 
-    it("with case -n 5", function() {
+    it("with case -n 5", () => {
       const userArgs = ["-n", "5", "file1"];
       const expectedOutput = {
         option: "-n",
@@ -58,7 +58,7 @@ describe("parseInputs", function() {
       assert.deepEqual(parseInputs(userArgs), expectedOutput);
     });
 
-    it("with invalid option", function() {
+    it("with invalid option", () => {
       const userArgs = ["-v5", "file1"];
       const expectedOutput = {
         option: "-v",
@@ -69,7 +69,7 @@ describe("parseInputs", function() {
       assert.deepEqual(parseInputs(userArgs), expectedOutput);
     });
 
-    it("with string as value", function() {
+    it("with string as value", () => {
       const userArgs = ["-n", "five", "file1"];
       const expectedOutput = {
         option: "-n",

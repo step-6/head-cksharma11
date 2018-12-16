@@ -4,8 +4,8 @@ const {
   validateTailInputs
 } = require("../src/inputValidation.js");
 
-describe("validateHeadInputs", function() {
-  it("should return (isValid: true) when input is valid", function() {
+describe("validateHeadInputs", () => {
+  it("should return (isValid: true) when input is valid", () => {
     const expectedOutput = { isValid: true, errorMessage: "" };
     const actualOutput = validateHeadInputs({
       option: "-n",
@@ -16,7 +16,7 @@ describe("validateHeadInputs", function() {
     assert.deepEqual(actualOutput, expectedOutput);
   });
 
-  it("should return error message when value is 0 and option is -n", function() {
+  it("should return error message when value is 0 and option is -n", () => {
     const expectedOutput = {
       isValid: false,
       errorMessage: "head: illegal line count -- 0"
@@ -30,7 +30,7 @@ describe("validateHeadInputs", function() {
     assert.deepEqual(actualOutput, expectedOutput);
   });
 
-  it("should return error message when value is 0 and option is -c", function() {
+  it("should return error message when value is 0 and option is -c", () => {
     const expectedOutput = {
       isValid: false,
       errorMessage: "head: illegal byte count -- 0"
@@ -44,7 +44,7 @@ describe("validateHeadInputs", function() {
     assert.deepEqual(actualOutput, expectedOutput);
   });
 
-  it("should return error message when number of files is 0", function() {
+  it("should return error message when number of files is 0", () => {
     const expectedOutput = {
       isValid: false,
       errorMessage:
@@ -59,7 +59,7 @@ describe("validateHeadInputs", function() {
     assert.deepEqual(actualOutput, expectedOutput);
   });
 
-  it("should return error message for invalid option", function() {
+  it("should return error message for invalid option", () => {
     const expectedOutput = {
       isValid: false,
       errorMessage:
@@ -75,8 +75,8 @@ describe("validateHeadInputs", function() {
   });
 });
 
-describe("validateTailInputs", function() {
-  it("should return error message for invalid option", function() {
+describe("validateTailInputs", () => {
+  it("should return error message for invalid option", () => {
     const expectedOutput = {
       isValid: false,
       errorMessage:
@@ -92,7 +92,7 @@ describe("validateTailInputs", function() {
     assert.deepEqual(actualOutput, expectedOutput);
   });
 
-  it("should return error message for invalid count", function() {
+  it("should return error message for invalid count", () => {
     const expectedOutput = {
       isValid: false,
       errorMessage: "tail: illegal offset -- a"

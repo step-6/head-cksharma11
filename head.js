@@ -4,7 +4,7 @@ const { organizeHead } = require("./src/lib.js");
 
 const main = function() {
   let parsedInputs = parseInputs(process.argv.slice(2));
-  let result = organizeHead(fs.readFileSync, fs.existsSync, parsedInputs);
+  let result = organizeHead(fs, parsedInputs);
   console.log(result);
 };
 main();

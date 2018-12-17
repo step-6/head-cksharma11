@@ -117,7 +117,7 @@ describe("organizeResult", () => {
         fs,
         {
           option: "-n",
-          value: 2,
+          count: 2,
           fileNames: ["names"]
         },
         "head"
@@ -132,7 +132,7 @@ describe("organizeResult", () => {
         fs,
         {
           option: "-n",
-          value: 2,
+          count: 2,
           fileNames: ["numbers"]
         },
         "head"
@@ -147,7 +147,7 @@ describe("organizeResult", () => {
         fs,
         {
           option: "-n",
-          value: 2,
+          count: 2,
           fileNames: ["names", "numbers"]
         },
         "head"
@@ -156,13 +156,13 @@ describe("organizeResult", () => {
       assert.equal(actualOutput, expectedOutput);
     });
 
-    it("should return error when option value is 0", () => {
+    it("should return error when option count is 0", () => {
       const expectedOutput = "head: illegal line count -- 0";
       const actualOutput = organizeResult(
         fs,
         {
           option: "-n",
-          value: 0,
+          count: 0,
           fileNames: ["numbers"]
         },
         "head"
@@ -171,13 +171,13 @@ describe("organizeResult", () => {
       assert.equal(actualOutput, expectedOutput);
     });
 
-    it("should return error when option negative value passed", () => {
+    it("should return error when option negative count passed", () => {
       const expectedOutput = "head: illegal line count -- -1";
       const actualOutput = organizeResult(
         fs,
         {
           option: "-n",
-          value: -1,
+          count: -1,
           fileNames: ["numbers"]
         },
         "head"
@@ -194,7 +194,7 @@ describe("organizeResult", () => {
         fs,
         {
           option: "-n",
-          value: 1,
+          count: 1,
           fileNames: []
         },
         "head"
@@ -209,7 +209,7 @@ describe("organizeResult", () => {
         fs,
         {
           option: "-n",
-          value: 2,
+          count: 2,
           fileNames: ["numbers"]
         },
         "head"
@@ -226,7 +226,7 @@ describe("organizeResult", () => {
         fs,
         {
           option: "-n",
-          value: 2,
+          count: 2,
           fileNames: ["names"]
         },
         "tail"
@@ -241,7 +241,7 @@ describe("organizeResult", () => {
         fs,
         {
           option: "-n",
-          value: 2,
+          count: 2,
           fileNames: ["numbers"]
         },
         "tail"
@@ -256,7 +256,7 @@ describe("organizeResult", () => {
         fs,
         {
           option: "-n",
-          value: 2,
+          count: 2,
           fileNames: ["names", "numbers"]
         },
         "tail"
@@ -271,7 +271,7 @@ describe("organizeResult", () => {
         fs,
         {
           option: "-n",
-          value: 2,
+          count: 2,
           fileNames: ["abc"]
         },
         "tail"
@@ -287,7 +287,7 @@ describe("organizeResult", () => {
         fs,
         {
           option: "-v",
-          value: 2,
+          count: 2,
           fileNames: ["abc"]
         },
         "tail"
@@ -302,7 +302,7 @@ describe("organizeResult", () => {
         fs,
         {
           option: "-n",
-          value: 0,
+          count: 0,
           fileNames: ["names"]
         },
         "tail"

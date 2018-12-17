@@ -1,32 +1,34 @@
 const isInvalidOption = option => option != "-n" && option != "-c";
-const optionMapping = {'-n': 'line', '-c': 'byte'}
+const optionMapping = { "-n": "line", "-c": "byte" };
 const headUsageMessage = "usage: head [-n lines | -c bytes] [file ...]";
-const tailUsageMessage = "usage: tail [-F | -f | -r] [-q] [-b # | -c # | -n #] [file ...]";
+const tailUsageMessage =
+  "usage: tail [-F | -f | -r] [-q] [-b # | -c # | -n #] [file ...]";
 
-const validateHeadInputs = function({ option, value, fileNames }) {
-  const isInvalidCount = value => value <= 0 || isNaN(value);
+const validateHeadInputs = function({ option, count, fileNames }) {
+  const isInvalidCount = count => count <= 0 || isNaN(count);
 
   const isFileCountInvalid = fileNames => fileNames.length == 0;
 
-  if (isInvalidCount(value)) {
+  if (isInvalidCount(count)) {
     return {
       isValid: false,
-      errorMessage: `head: illegal ${optionMapping[option]} count -- ${value}`
+      errorMessage: `head: illegal ${optionMapping[option]} count -- ${count}`
     };
   }
 
-  if (isInvalidOption(option, value)) {
+  if (isInvalidOption(option, count)) {
     return {
       isValid: false,
-      errorMessage:`head: illegal option -- ${option}\n${headUsageMessage}`
+      errorMessage: `head: illegal option -- ${option}\n${headUsageMessage}`
     };
   }
 
   if (isFileCountInvalid(fileNames)) {
     return {
       isValid: false,
-      errorMessage:
-        `head: option requires an argument -- ${option[1]}\n${headUsageMessage}`
+      errorMessage: `head: option requires an argument -- ${
+        option[1]
+      }\n${headUsageMessage}`
     };
   }
 
@@ -36,21 +38,20 @@ const validateHeadInputs = function({ option, value, fileNames }) {
   };
 };
 
-const validateTailInputs = function({option, value, fileNames}){
-  const isInvalidCount = value => isNaN(value);
-  
-  if (isInvalidOption(option, value)) {
+const validateTailInputs = function({ option, count, fileNames }) {
+  const isInvalidCount = count => isNaN(count);
+
+  if (isInvalidOption(option, count)) {
     return {
       isValid: false,
-      errorMessage:
-      `tail: illegal option -- ${option}\n${tailUsageMessage}`    
+      errorMessage: `tail: illegal option -- ${option}\n${tailUsageMessage}`
     };
   }
 
-  if (isInvalidCount(value)) {
+  if (isInvalidCount(count)) {
     return {
       isValid: false,
-      errorMessage: `tail: illegal offset -- ${value}`
+      errorMessage: `tail: illegal offset -- ${count}`
     };
   }
 
@@ -58,7 +59,7 @@ const validateTailInputs = function({option, value, fileNames}){
     isValid: true,
     errorMessage: ""
   };
-}
+};
 
 module.exports = {
   validateHeadInputs,

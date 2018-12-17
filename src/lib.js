@@ -42,26 +42,26 @@ const getCharsFromTail = function(content, numOfChar) {
   return content.slice(-numOfChar);
 };
 
-const runCommand = function(contents, value, fileNames, operation, command) {
+const runCommand = function(contents, count, fileNames, operation, command) {
   if (isSingleExistingFile(fileNames.length, contents[0])) {
-    return [operation(contents[0], value)];
+    return [operation(contents[0], count)];
   }
 
   return zip(contents, fileNames).map(([content, fileName]) => {
     if (content == null) return fileNotFoundLog(fileName, command);
-    const result = operation(content, value);
+    const result = operation(content, count);
     return addHeader(fileName, result);
   });
 };
 
-const organizeResult = function(fs, { option, value, fileNames }, command) {
-  const inputValidation = validations[command]({ option, value, fileNames });
+const organizeResult = function(fs, { option, count, fileNames }, command) {
+  const inputValidation = validations[command]({ option, count, fileNames });
   if (!inputValidation.isValid) return inputValidation.errorMessage;
-  if (value == 0) return "";
+  if (count == 0) return "";
 
   const operation = operations[command][option];
   const fileContents = getFileContents(fs, fileNames);
-  const result = runCommand(fileContents, value, fileNames, operation, command);
+  const result = runCommand(fileContents, count, fileNames, operation, command);
   return result.join("\n\n");
 };
 

@@ -20,5 +20,5 @@
 17       getNumberOptions() name can be changed.
 25       getOptionWithCount() name can be changed.
 33       getOptionWithoutCount() name can be changed. -> can be renamed because it is also used for tail input parsing.
-10       value can be renamed as count.
+10       count can be renamed as count.
 ````

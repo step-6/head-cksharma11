@@ -7,7 +7,7 @@ describe("parseInputs", () => {
       const userArgs = ["-n5", "file1"];
       const expectedOutput = {
         option: "-n",
-        value: 5,
+        count: 5,
         fileNames: ["file1"]
       };
 
@@ -18,7 +18,7 @@ describe("parseInputs", () => {
       const userArgs = ["-c5", "file1"];
       const expectedOutput = {
         option: "-c",
-        value: 5,
+        count: 5,
         fileNames: ["file1"]
       };
 
@@ -29,7 +29,7 @@ describe("parseInputs", () => {
       const userArgs = ["file1"];
       const expectedOutput = {
         option: "-n",
-        value: 10,
+        count: 10,
         fileNames: ["file1"]
       };
 
@@ -40,7 +40,7 @@ describe("parseInputs", () => {
       const userArgs = ["-11", "file1"];
       const expectedOutput = {
         option: "-n",
-        value: 11,
+        count: 11,
         fileNames: ["file1"]
       };
 
@@ -51,7 +51,7 @@ describe("parseInputs", () => {
       const userArgs = ["-n", "5", "file1"];
       const expectedOutput = {
         option: "-n",
-        value: 5,
+        count: 5,
         fileNames: ["file1"]
       };
 
@@ -62,18 +62,18 @@ describe("parseInputs", () => {
       const userArgs = ["-v5", "file1"];
       const expectedOutput = {
         option: "-v",
-        value: 5,
+        count: 5,
         fileNames: ["file1"]
       };
 
       assert.deepEqual(parseInputs(userArgs), expectedOutput);
     });
 
-    it("with string as value", () => {
+    it("with string as count", () => {
       const userArgs = ["-n", "five", "file1"];
       const expectedOutput = {
         option: "-n",
-        value: "five",
+        count: "five",
         fileNames: ["file1"]
       };
 

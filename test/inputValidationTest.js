@@ -9,35 +9,35 @@ describe("validateHeadInputs", () => {
     const expectedOutput = { isValid: true, errorMessage: "" };
     const actualOutput = validateHeadInputs({
       option: "-n",
-      value: 10,
+      count: 10,
       fileNames: ["file"]
     });
 
     assert.deepEqual(actualOutput, expectedOutput);
   });
 
-  it("should return error message when value is 0 and option is -n", () => {
+  it("should return error message when count is 0 and option is -n", () => {
     const expectedOutput = {
       isValid: false,
       errorMessage: "head: illegal line count -- 0"
     };
     const actualOutput = validateHeadInputs({
       option: "-n",
-      value: 0,
+      count: 0,
       fileNames: ["file"]
     });
 
     assert.deepEqual(actualOutput, expectedOutput);
   });
 
-  it("should return error message when value is 0 and option is -c", () => {
+  it("should return error message when count is 0 and option is -c", () => {
     const expectedOutput = {
       isValid: false,
       errorMessage: "head: illegal byte count -- 0"
     };
     const actualOutput = validateHeadInputs({
       option: "-c",
-      value: 0,
+      count: 0,
       fileNames: ["file"]
     });
 
@@ -52,7 +52,7 @@ describe("validateHeadInputs", () => {
     };
     const actualOutput = validateHeadInputs({
       option: "-c",
-      value: 10,
+      count: 10,
       fileNames: []
     });
 
@@ -67,7 +67,7 @@ describe("validateHeadInputs", () => {
     };
     const actualOutput = validateHeadInputs({
       option: "-v",
-      value: 10,
+      count: 10,
       fileNames: []
     });
 
@@ -85,7 +85,7 @@ describe("validateTailInputs", () => {
     };
     const actualOutput = validateTailInputs({
       option: "-v",
-      value: 10,
+      count: 10,
       fileNames: []
     });
 
@@ -99,7 +99,7 @@ describe("validateTailInputs", () => {
     };
     const actualOutput = validateTailInputs({
       option: "-n",
-      value: "a",
+      count: "a",
       fileNames: []
     });
 

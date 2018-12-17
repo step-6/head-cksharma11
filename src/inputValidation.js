@@ -9,17 +9,17 @@ const validateHeadInputs = function({ option, count, fileNames }) {
 
   const isFileCountInvalid = fileNames => fileNames.length == 0;
 
-  if (isInvalidCount(count)) {
-    return {
-      isValid: false,
-      errorMessage: `head: illegal ${optionMapping[option]} count -- ${count}`
-    };
-  }
-
   if (isInvalidOption(option, count)) {
     return {
       isValid: false,
       errorMessage: `head: illegal option -- ${option}\n${headUsageMessage}`
+    };
+  }
+
+  if (isInvalidCount(count)) {
+    return {
+      isValid: false,
+      errorMessage: `head: illegal ${optionMapping[option]} count -- ${count}`
     };
   }
 

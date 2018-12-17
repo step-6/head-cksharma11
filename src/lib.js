@@ -42,7 +42,7 @@ const getCharsFromTail = function(content, numOfChar) {
   return content.slice(-numOfChar);
 };
 
-const runCommand = function(contents, option, value, fileNames, operation) {
+const runCommand = function(contents, value, fileNames, operation) {
   if (isSingleExistingFile(fileNames.length, contents[0])) {
     return [operation(contents[0], value)];
   }
@@ -61,7 +61,7 @@ const organizeResult = function(fs, { option, value, fileNames }, command) {
 
   const operation = operations[command][option];
   const fileContents = getFileContents(fs, fileNames);
-  const result = runCommand(fileContents, option, value, fileNames, operation);
+  const result = runCommand(fileContents, value, fileNames, operation);
   return result.join("\n\n");
 };
 

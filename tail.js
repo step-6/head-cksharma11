@@ -1,5 +1,5 @@
 const fs = require("fs");
-const { parseInputs } = require("./src/headIO.js");
+const { parseInputs } = require("./src/IO.js");
 const { organizeTail } = require("./src/lib.js");
 
 const main = function() {

@@ -1,5 +1,5 @@
 const assert = require("assert");
-const { parseInputs } = require("../src/headIO.js");
+const { parseInputs } = require("../src/IO.js");
 
 describe("parseInputs", () => {
   describe("should categorize inputs and return object", () => {

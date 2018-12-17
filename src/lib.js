@@ -78,5 +78,6 @@ module.exports = {
   getFileContents,
   getLinesFromTail,
   getCharsFromTail,
-  organizeResult
+  organizeResult,
+  runCommand
 };

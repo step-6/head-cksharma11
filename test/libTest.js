@@ -2,8 +2,8 @@ const assert = require("assert");
 const {
   getLinesFromHead,
   getCharsFromHead,
-  head,
-  tail,
+  // head,
+  // tail,
   addHeader,
   fileNotFoundLog,
   // organizeHead,
@@ -67,7 +67,7 @@ describe("getCharsFromHead", () => {
   });
 });
 
-describe("head", () => {
+xdescribe("head", () => {
   it("should return default 10 lines for single file", () => {
     const file = [
       "Line 1",
@@ -413,7 +413,7 @@ xdescribe("organizeTail", () => {
   });
 });
 
-describe("tail", () => {
+xdescribe("tail", () => {
   it("should return default 10 lines for single file", () => {
     const file = [
       "Line 1",

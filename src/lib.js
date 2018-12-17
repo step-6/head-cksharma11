@@ -42,25 +42,7 @@ const getCharsFromTail = function(content, numOfChar) {
   return content.slice(-numOfChar);
 };
 
-// const organizeHead = function(fs, { option, value, fileNames }) {
-//   return organizeResult(fs, { option, value, fileNames }, "head");
-// };
-
-// const organizeTail = function(fs, { option, value, fileNames }) {
-//   return organizeResult(fs, { option, value, fileNames }, "tail");
-// };
-
-// const head = function(contents, option, value, fileNames) {
-//   return runCommand(contents, option, value, fileNames, "head");
-// };
-
-// const tail = function(contents, option, value, fileNames) {
-//   return runCommand(contents, option, value, fileNames, "tail");
-// };
-
 const runCommand = function(contents, option, value, fileNames, operation) {
-  // const operation = operations[command][option];
-
   if (isSingleExistingFile(fileNames.length, contents[0])) {
     return [operation(contents[0], value)];
   }
@@ -87,19 +69,14 @@ const headOperations = { "-n": getLinesFromHead, "-c": getCharsFromHead };
 const tailOperations = { "-n": getLinesFromTail, "-c": getCharsFromTail };
 const operations = { head: headOperations, tail: tailOperations };
 const validations = { head: validateHeadInputs, tail: validateTailInputs };
-// const commands = { head: head, tail: tail };
 
 module.exports = {
   getLinesFromHead,
   getCharsFromHead,
-  // head,
-  // tail,
-  // organizeHead,
   addHeader,
   fileNotFoundLog,
   getFileContents,
   getLinesFromTail,
   getCharsFromTail,
-  // organizeTail,
   organizeResult
 };

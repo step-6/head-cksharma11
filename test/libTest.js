@@ -2,15 +2,11 @@ const assert = require("assert");
 const {
   getLinesFromHead,
   getCharsFromHead,
-  // head,
-  // tail,
   addHeader,
   fileNotFoundLog,
-  // organizeHead,
   getFileContents,
   getLinesFromTail,
   getCharsFromTail
-  // organizeTail
 } = require("../src/lib.js");
 
 describe("getLinesFromHead", () => {

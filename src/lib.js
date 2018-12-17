@@ -42,13 +42,13 @@ const getCharsFromTail = function(content, numOfChar) {
   return content.slice(-numOfChar);
 };
 
-const organizeHead = function(fs, { option, value, fileNames }) {
-  return organizeResult(fs, { option, value, fileNames }, "head");
-};
+// const organizeHead = function(fs, { option, value, fileNames }) {
+//   return organizeResult(fs, { option, value, fileNames }, "head");
+// };
 
-const organizeTail = function(fs, { option, value, fileNames }) {
-  return organizeResult(fs, { option, value, fileNames }, "tail");
-};
+// const organizeTail = function(fs, { option, value, fileNames }) {
+//   return organizeResult(fs, { option, value, fileNames }, "tail");
+// };
 
 const head = function(contents, option, value, fileNames) {
   return runCommand(contents, option, value, fileNames, "head");
@@ -93,11 +93,12 @@ module.exports = {
   getCharsFromHead,
   head,
   tail,
-  organizeHead,
+  // organizeHead,
   addHeader,
   fileNotFoundLog,
   getFileContents,
   getLinesFromTail,
   getCharsFromTail,
-  organizeTail
+  // organizeTail,
+  organizeResult
 };

@@ -6,11 +6,11 @@ const {
   tail,
   addHeader,
   fileNotFoundLog,
-  organizeHead,
+  // organizeHead,
   getFileContents,
   getLinesFromTail,
-  getCharsFromTail,
-  organizeTail
+  getCharsFromTail
+  // organizeTail
 } = require("../src/lib.js");
 
 describe("getLinesFromHead", () => {
@@ -194,7 +194,7 @@ const existsSync = function(fileName) {
 
 const fs = { readFileSync, existsSync };
 
-describe("organizeHead", () => {
+xdescribe("organizeHead", () => {
   it("should return list of names when file name is names", () => {
     const expectedOutput = "A\nB";
     const actualOutput = organizeHead(fs, {
@@ -344,7 +344,7 @@ describe("getCharsFromTail", () => {
   });
 });
 
-describe("organizeTail", () => {
+xdescribe("organizeTail", () => {
   it("should return list of names when file name is names", () => {
     const expectedOutput = "D\nE";
     const actualOutput = organizeTail(fs, {

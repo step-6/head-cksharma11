@@ -13,18 +13,18 @@ const {
 
 describe("getLinesFromHead", () => {
   const fileContents = [
-    "This is test file",
-    "This is line 2",
-    "This is line 3",
-    "This is line 4",
-    "This is line 5",
-    "This is line 6",
-    "This is line 7",
-    "This is line 8",
-    "This is line 9",
-    "This is line 10",
-    "This is line 11",
-    "This is line 12\n"
+    "1",
+    "2",
+    "3",
+    "4",
+    "5",
+    "6",
+    "7",
+    "8",
+    "9",
+    "10",
+    "11",
+    "12"
   ].join("\n");
 
   it("should return empty string with input 0", () => {
@@ -32,21 +32,21 @@ describe("getLinesFromHead", () => {
   });
 
   it("should return 1 line with input 1", () => {
-    assert.equal(getLinesFromHead(fileContents, 1), "This is test file");
+    assert.equal(getLinesFromHead(fileContents, 1), "1");
   });
 
   it("should return 10 line as default", () => {
     const expectedOutput = [
-      "This is test file",
-      "This is line 2",
-      "This is line 3",
-      "This is line 4",
-      "This is line 5",
-      "This is line 6",
-      "This is line 7",
-      "This is line 8",
-      "This is line 9",
-      "This is line 10"
+      "1",
+      "2",
+      "3",
+      "4",
+      "5",
+      "6",
+      "7",
+      "8",
+      "9",
+      "10"
     ].join("\n");
 
     assert.equal(getLinesFromHead(fileContents), expectedOutput);
@@ -67,9 +67,9 @@ describe("getCharsFromHead", () => {
 
 describe("addHeader", () => {
   it("should add header with passed contents", () => {
-    const content = "This is sample file";
+    const content = "ABCD";
     const fileName = "Test.js";
-    const expectedOutput = "==> Test.js <==\nThis is sample file";
+    const expectedOutput = "==> Test.js <==\nABCD";
     const actualOutput = addHeader(fileName, content);
 
     assert.equal(actualOutput, expectedOutput);
@@ -385,17 +385,20 @@ describe("getCharsFromTail", () => {
 describe("runCommand", () => {
   describe("run command with tail as command", () => {
     it("should return default 10 lines for single file", () => {
-      const file = [
-        "Line 1",
-        "Line 2",
-        "Line 3",
-        "Line 4",
-        "Line 5",
-        "Line 6",
-        "Line 7",
-        "Line 8",
-        "Line 9",
-        "Line 10"
+      const file = ["1", "2", "3", "4", "5", "6", "7", "8", "9", "10"].join(
+        "\n"
+      );
+      const expectedOutput = [
+        "1",
+        "2",
+        "3",
+        "4",
+        "5",
+        "6",
+        "7",
+        "8",
+        "9",
+        "10"
       ].join("\n");
       const actualOutput = runCommand(
         [file],
@@ -405,34 +408,18 @@ describe("runCommand", () => {
         "tail"
       );
 
-      assert.deepEqual(actualOutput, [file]);
+      assert.deepEqual(actualOutput, [expectedOutput]);
     });
 
     it("should return number of input lines from tail with 2 files", () => {
-      const file1 = [
-        "Line 1",
-        "Line 2",
-        "Line 3",
-        "Line 4",
-        "Line 5",
-        "Line 6",
-        "Line 7",
-        "Line 8",
-        "Line 9",
-        "Line 10"
-      ].join("\n");
-      const file2 = [
-        "File2 line 1",
-        "File2 line 2",
-        "File2 line 3",
-        "File2 line 4",
-        "File2 line 5",
-        "File2 line 6"
-      ].join("\n");
+      const file1 = ["1", "2", "3", "4", "5", "6", "7", "8", "9", "10"].join(
+        "\n"
+      );
+      const file2 = ["A", "B", "C", "D", "E", "F"].join("\n");
 
       const expectedOutput = [
-        "==> file1 <==\nLine 8\nLine 9\nLine 10",
-        "==> file2 <==\nFile2 line 4\nFile2 line 5\nFile2 line 6"
+        "==> file1 <==\n8\n9\n10",
+        "==> file2 <==\nD\nE\nF"
       ];
 
       const actualOutput = runCommand(
@@ -487,18 +474,9 @@ describe("runCommand", () => {
 
   describe("runCommand with head as command", () => {
     it("should return default 10 lines for single file", () => {
-      const file = [
-        "Line 1",
-        "Line 2",
-        "Line 3",
-        "Line 4",
-        "Line 5",
-        "Line 6",
-        "Line 7",
-        "Line 8",
-        "Line 9",
-        "Line 10"
-      ].join("\n");
+      const file = ["1", "2", "3", "4", "5", "6", "7", "8", "9", "10"].join(
+        "\n"
+      );
 
       assert.deepEqual(
         runCommand([file], 10, ["file"], getLinesFromHead, "head"),
@@ -507,36 +485,14 @@ describe("runCommand", () => {
     });
 
     it("should return number of input lines with 2 files", () => {
-      const file1 = [
-        "Line 1",
-        "Line 2",
-        "Line 3",
-        "Line 4",
-        "Line 5",
-        "Line 6",
-        "Line 7",
-        "Line 8",
-        "Line 9",
-        "Line 10"
-      ].join("\n");
-      const file2 = [
-        "File2 line 1",
-        "File2 line 2",
-        "File2 line 3",
-        "File2 line 4",
-        "File2 line 5",
-        "File2 line 6"
-      ].join("\n");
+      const file1 = ["1", "2", "3", "4", "5", "6", "7", "8", "9", "10"].join(
+        "\n"
+      );
+      const file2 = ["A", "B", "C", "D", "E", "F"].join("\n");
 
       const expectedOutput = [
-        `==> file1 <==
-Line 1
-Line 2
-Line 3`,
-        `==> file2 <==
-File2 line 1
-File2 line 2
-File2 line 3`
+        `==> file1 <==\n1\n2\n3`,
+        `==> file2 <==\nA\nB\nC`
       ];
 
       const actualOutput = runCommand(

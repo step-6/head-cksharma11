@@ -26,7 +26,6 @@ const maybeAddHeader = function(contents, fileNames) {
 
 const addFileNotFoundLog = function(fileNames, contents, command) {
   return zip(contents, fileNames).map(([content, fileName]) => {
-    console.log(content);
     if (content == null) return fileNotFoundLog(fileName, command);
     return content;
   });

@@ -115,11 +115,7 @@ describe("organizeResult", () => {
       const expectedOutput = "A\nB";
       const actualOutput = organizeResult(
         fs,
-        {
-          option: "-n",
-          count: 2,
-          fileNames: ["names"]
-        },
+        { option: "-n", count: 2, fileNames: ["names"] },
         "head"
       );
 
@@ -383,7 +379,7 @@ describe("getCharsFromTail", () => {
 });
 
 describe("runCommand", () => {
-  describe("run command with tail as command", () => {
+  describe("run command with tail as operation", () => {
     it("should return default 10 lines for single file", () => {
       const file = ["1", "2", "3", "4", "5", "6", "7", "8", "9", "10"].join(
         "\n"
@@ -400,13 +396,7 @@ describe("runCommand", () => {
         "9",
         "10"
       ].join("\n");
-      const actualOutput = runCommand(
-        [file],
-        10,
-        ["file"],
-        getLinesFromTail,
-        "tail"
-      );
+      const actualOutput = runCommand([file], 10, getLinesFromTail);
 
       assert.deepEqual(actualOutput, [expectedOutput]);
     });
@@ -417,71 +407,62 @@ describe("runCommand", () => {
       );
       const file2 = ["A", "B", "C", "D", "E", "F"].join("\n");
 
-      const expectedOutput = [
-        "==> file1 <==\n8\n9\n10",
-        "==> file2 <==\nD\nE\nF"
-      ];
+      const expectedOutput = ["8\n9\n10", "D\nE\nF"];
 
-      const actualOutput = runCommand(
-        [file1, file2],
-        3,
-        ["file1", "file2"],
-        getLinesFromTail,
-        "tail"
-      );
+      const actualOutput = runCommand([file1, file2], 3, getLinesFromTail);
 
       assert.deepEqual(actualOutput, expectedOutput);
     });
 
     it("should return empty when no files passed", () => {
-      const actualOutput = runCommand([], 1, [], getLinesFromTail, "tail");
+      const actualOutput = runCommand([], 1, getLinesFromTail);
       assert.equal(actualOutput, "");
     });
 
     it("should return file not found log for single null file", () => {
       const nullFile = null;
-      const expectedOutput = "tail: nullFile: No such file or directory";
-      const actualOutput = runCommand(
-        [nullFile],
-        1,
-        ["nullFile"],
-        getLinesFromTail,
-        "tail"
-      );
+      const expectedOutput = [null];
+      const actualOutput = runCommand([nullFile], 1, getLinesFromTail);
 
-      assert.equal(actualOutput, expectedOutput);
+      assert.deepEqual(actualOutput, expectedOutput);
     });
 
     it("should return file not found log when one file exists", () => {
       const nullFile = null;
       const fileWithContent = "File with content";
-      const expectedOutput = [
-        "tail: nullFile: No such file or directory",
-        "==> fileWithContent <==\nFile with content"
-      ];
+      const expectedOutput = [null, "File with content"];
 
       const actualOutput = runCommand(
         [nullFile, fileWithContent],
         1,
-        ["nullFile", "fileWithContent"],
-        getLinesFromTail,
-        "tail"
+        getLinesFromTail
       );
 
       assert.deepEqual(actualOutput, expectedOutput);
     });
   });
 
-  describe("runCommand with head as command", () => {
+  describe("runCommand with head as operation", () => {
     it("should return default 10 lines for single file", () => {
       const file = ["1", "2", "3", "4", "5", "6", "7", "8", "9", "10"].join(
         "\n"
       );
+      const expectedOutput = [
+        "1",
+        "2",
+        "3",
+        "4",
+        "5",
+        "6",
+        "7",
+        "8",
+        "9",
+        "10"
+      ].join("\n");
 
-      assert.deepEqual(
-        runCommand([file], 10, ["file"], getLinesFromHead, "head"),
-        [file]
-      );
+      assert.deepEqual(runCommand([file], 10, getLinesFromHead), [
+        expectedOutput
+      ]);
     });
 
     it("should return number of input lines with 2 files", () => {
@@ -490,18 +471,9 @@ describe("runCommand", () => {
       );
       const file2 = ["A", "B", "C", "D", "E", "F"].join("\n");
 
-      const expectedOutput = [
-        `==> file1 <==\n1\n2\n3`,
-        `==> file2 <==\nA\nB\nC`
-      ];
+      const expectedOutput = [`1\n2\n3`, `A\nB\nC`];
 
-      const actualOutput = runCommand(
-        [file1, file2],
-        3,
-        ["file1", "file2"],
-        getLinesFromHead,
-        "head"
-      );
+      const actualOutput = runCommand([file1, file2], 3, getLinesFromHead);
       assert.deepEqual(actualOutput, expectedOutput);
     });
 
@@ -512,30 +484,19 @@ describe("runCommand", () => {
 
     it("should return file not found log for single null file", () => {
       const nullFile = null;
-      const expectedOutput = "head: nullFile: No such file or directory";
-      const actualOutput = runCommand(
-        [nullFile],
-        1,
-        ["nullFile"],
-        getLinesFromHead,
-        "head"
-      );
-      assert.equal(actualOutput, expectedOutput);
+      const expectedOutput = [null];
+      const actualOutput = runCommand([nullFile], 1, getLinesFromHead);
+      assert.deepEqual(actualOutput, expectedOutput);
     });
 
     it("should return file not found log when one file exists", () => {
       const nullFile = null;
       const fileWithContent = "File with content";
-      const expectedOutput = [
-        "head: nullFile: No such file or directory",
-        "==> fileWithContent <==\nFile with content"
-      ];
+      const expectedOutput = [null, "File with content"];
       const actualOutput = runCommand(
         [nullFile, fileWithContent],
         1,
-        ["nullFile", "fileWithContent"],
-        getLinesFromHead,
-        "head"
+        getLinesFromHead
       );
 
       assert.deepEqual(actualOutput, expectedOutput);

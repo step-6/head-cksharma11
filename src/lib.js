@@ -42,15 +42,19 @@ const getCharsFromTail = function(content, numOfChar) {
   return content.slice(-numOfChar);
 };
 
-const runCommand = function(contents, count, fileNames, operation, command) {
-  if (isSingleExistingFile(fileNames.length, contents[0])) {
-    return [operation(contents[0], count)];
-  }
+const runCommand = function(contents, count, operation) {
+  return contents.map(content => {
+    if (content == null) return content;
+    return operation(content, count);
+  });
+};
+
+const maybeAddHeader = function(contents, fileNames, command) {
+  if (isSingleExistingFile(fileNames.length, contents[0])) return [contents];
 
   return zip(contents, fileNames).map(([content, fileName]) => {
     if (content == null) return fileNotFoundLog(fileName, command);
-    const result = operation(content, count);
-    return addHeader(fileName, result);
+    return addHeader(fileName, content);
   });
 };
 
@@ -61,8 +65,9 @@ const organizeResult = function(fs, { option, count, fileNames }, command) {
 
   const operation = operations[command][option];
   const fileContents = getFileContents(fs, fileNames);
-  const result = runCommand(fileContents, count, fileNames, operation, command);
-  return result.join("\n\n");
+  const result = runCommand(fileContents, count, operation);
+  return maybeAddHeader(result, fileNames, command).join("\n\n");
+  // return result.join("\n\n");
 };
 
 const headOperations = { "-n": getLinesFromHead, "-c": getCharsFromHead };

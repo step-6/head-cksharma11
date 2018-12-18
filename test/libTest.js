@@ -1,8 +1,8 @@
 const assert = require("assert");
+const { fs } = require("./testHelpers.js");
 const {
   getLinesFromHead,
   getCharsFromHead,
-  addHeader,
   fileNotFoundLog,
   getFileContents,
   getLinesFromTail,
@@ -82,21 +82,6 @@ describe("fileNotFoundLog", () => {
     assert.equal(actualOutput, expectedOutput);
   });
 });
-
-const readFileSync = function(fileName) {
-  let fileContents = {
-    names: "A\nB\nC\nD\nE",
-    numbers: "1\n2\n3\n4\n5"
-  };
-  return fileContents[fileName];
-};
-
-const existsSync = function(fileName) {
-  let fileNames = ["names", "numbers"];
-  return fileNames.includes(fileName);
-};
-
-const fs = { readFileSync, existsSync };
 
 describe("getFileContents", () => {
   it("should return null when file not found", () => {

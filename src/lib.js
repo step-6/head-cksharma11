@@ -2,7 +2,6 @@ const {
   validateHeadInputs,
   validateTailInputs
 } = require("./inputValidation.js");
-const { zip } = require("./util.js");
 
 const fileNotFoundLog = function(fileName, command) {
   return command + ": " + fileName + ": No such file or directory";

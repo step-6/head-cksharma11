@@ -1,5 +1,5 @@
 const assert = require("assert");
-const { fs } = require("./testHelpers.js");
+const { mockReader, mockValidator } = require("./testHelpers.js");
 const {
   getLinesFromHead,
   getCharsFromHead,
@@ -7,7 +7,6 @@ const {
   getFileContents,
   getLinesFromTail,
   getCharsFromTail,
-  organizeResult,
   runCommand
 } = require("../src/lib.js");
 
@@ -84,6 +83,16 @@ describe("fileNotFoundLog", () => {
 });
 
 describe("getFileContents", () => {
+  const fs = {};
+  fs["readFileSync"] = mockReader({
+    names: "A\nB\nC\nD\nE",
+    numbers: "1\n2\n3\n4\n5"
+  });
+  fs["existsSync"] = mockValidator({
+    names: "A\nB\nC\nD\nE",
+    numbers: "1\n2\n3\n4\n5"
+  });
+
   it("should return null when file not found", () => {
     const expectedOutput = [null];
     const actualOutput = getFileContents(fs, ["badFile"]);

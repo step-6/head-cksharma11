@@ -13,6 +13,4 @@ const mockValidator = function(expectedFiles) {
   };
 };
 
-const fs = {};
-
-module.exports = { fs, mockReader, mockValidator };
+module.exports = { mockReader, mockValidator };

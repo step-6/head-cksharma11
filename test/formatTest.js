@@ -1,5 +1,5 @@
 const assert = require("assert");
-const { fs, mockReader, mockValidator } = require("./testHelpers.js");
+const { mockReader, mockValidator } = require("./testHelpers.js");
 const { organizeResult, addHeader } = require("../src/format.js");
 
 describe("addHeader", () => {
@@ -14,6 +14,7 @@ describe("addHeader", () => {
 });
 
 describe("organizeResult", () => {
+  const fs = {};
   fs["readFileSync"] = mockReader({
     names: "A\nB\nC\nD\nE",
     numbers: "1\n2\n3\n4\n5"

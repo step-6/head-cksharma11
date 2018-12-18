@@ -1,5 +1,5 @@
 const assert = require("assert");
-const { fs } = require("./testHelpers.js");
+const { fs, mockReader, mockValidator } = require("./testHelpers.js");
 const { organizeResult, addHeader } = require("../src/format.js");
 
 describe("addHeader", () => {
@@ -14,6 +14,15 @@ describe("addHeader", () => {
 });
 
 describe("organizeResult", () => {
+  fs["readFileSync"] = mockReader({
+    names: "A\nB\nC\nD\nE",
+    numbers: "1\n2\n3\n4\n5"
+  });
+  fs["existsSync"] = mockValidator({
+    names: "A\nB\nC\nD\nE",
+    numbers: "1\n2\n3\n4\n5"
+  });
+
   describe("organizeResult with head as command ", () => {
     it("should return list of names when file name is names", () => {
       const expectedOutput = "A\nB";

@@ -1,16 +1,18 @@
-const readFileSync = function(fileName) {
-  let fileContents = {
-    names: "A\nB\nC\nD\nE",
-    numbers: "1\n2\n3\n4\n5"
+const mockReader = function(expectedFiles) {
+  return function(actualPath) {
+    return expectedFiles[actualPath];
   };
-  return fileContents[fileName];
 };
 
-const existsSync = function(fileName) {
-  let fileNames = ["names", "numbers"];
-  return fileNames.includes(fileName);
+const mockValidator = function(expectedFiles) {
+  return function(actualPath) {
+    if (expectedFiles[actualPath]) {
+      return true;
+    }
+    return false;
+  };
 };
 
-const fs = { readFileSync, existsSync };
+const fs = {};
 
-module.exports = { fs };
+module.exports = { fs, mockReader, mockValidator };

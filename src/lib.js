@@ -67,7 +67,6 @@ const organizeResult = function(fs, { option, count, fileNames }, command) {
   const fileContents = getFileContents(fs, fileNames);
   const result = runCommand(fileContents, count, operation);
   return maybeAddHeader(result, fileNames, command).join("\n\n");
-  // return result.join("\n\n");
 };
 
 const headOperations = { "-n": getLinesFromHead, "-c": getCharsFromHead };

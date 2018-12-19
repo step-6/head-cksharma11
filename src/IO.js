@@ -1,9 +1,13 @@
+const isNumber = function(numberCandidate) {
+  return !isNaN(numberCandidate);
+};
+
 const isOptionSpecified = function(input) {
   return input.startsWith("-");
 };
 
 const isNumberOption = function(input) {
-  return isOptionSpecified(input) && isFinite(input[1]);
+  return isOptionSpecified(input) && isNumber(input[1]);
 };
 
 const isOptionWithCount = function(input) {

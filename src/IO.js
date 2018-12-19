@@ -47,15 +47,17 @@ const getDefaultOptions = function(inputs) {
 };
 
 const parseInputs = function(inputs) {
-  if (isNumberOption(inputs[0])) {
+  const option = inputs[0];
+
+  if (isNumberOption(option)) {
     return getNumberOptions(inputs);
   }
 
-  if (isOptionWithCount(inputs[0])) {
+  if (isOptionWithCount(option)) {
     return getOptionsWithCount(inputs);
   }
 
-  if (isOptionWithoutCount(inputs[0])) {
+  if (isOptionWithoutCount(option)) {
     return getOptionsWithoutCount(inputs);
   }
 

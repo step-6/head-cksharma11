@@ -42,9 +42,11 @@ const getOptionsWithoutCount = function(inputs) {
   };
 };
 
-const parseInputs = function(inputs) {
-  const defaultOptions = { option: "-n", count: 10, fileNames: inputs };
+const getDefaultOptions = function(inputs) {
+  return { option: "-n", count: 10, fileNames: inputs };
+};
 
+const parseInputs = function(inputs) {
   if (isNumberOption(inputs[0])) {
     return getNumberOptions(inputs);
   }
@@ -57,7 +59,7 @@ const parseInputs = function(inputs) {
     return getOptionsWithoutCount(inputs);
   }
 
-  return defaultOptions;
+  return getDefaultOptions(inputs);
 };
 
 module.exports = {

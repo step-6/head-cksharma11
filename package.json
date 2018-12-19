@@ -1,0 +1,25 @@
+{
+  "name": "head-cksharma11",
+  "version": "1.0.0",
+  "description": "head and tail command using js",
+  "main": "head.js",
+  "directories": {
+    "test": "test"
+  },
+  "scripts": {
+    "test": "mocha"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/STEP-tw/head-cksharma11.git"
+  },
+  "author": "Chandan Kumar",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/STEP-tw/head-cksharma11/issues"
+  },
+  "homepage": "https://github.com/STEP-tw/head-cksharma11#readme",
+  "devDependencies": {
+    "mocha": "^5.2.0"
+  }
+}

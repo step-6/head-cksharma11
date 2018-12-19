@@ -61,7 +61,12 @@ const validateTailInputs = function({ option, count, fileNames }) {
   };
 };
 
+const fileNotFoundLog = function(fileName, command) {
+  return command + ": " + fileName + ": No such file or directory";
+};
+
 module.exports = {
   validateHeadInputs,
-  validateTailInputs
+  validateTailInputs,
+  fileNotFoundLog
 };

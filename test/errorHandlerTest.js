@@ -1,7 +1,8 @@
 const assert = require("assert");
 const {
   validateHeadInputs,
-  validateTailInputs
+  validateTailInputs,
+  fileNotFoundLog
 } = require("../src/errorHandler.js");
 
 describe("validateHeadInputs", () => {
@@ -104,5 +105,23 @@ describe("validateTailInputs", () => {
     });
 
     assert.deepEqual(actualOutput, expectedOutput);
+  });
+});
+
+describe("fileNotFoundLog", () => {
+  it("should return log when file not found (head)", () => {
+    const fileName = "Test";
+    const expectedOutput = "head: " + fileName + ": No such file or directory";
+    const actualOutput = fileNotFoundLog(fileName, "head");
+
+    assert.equal(actualOutput, expectedOutput);
+  });
+
+  it("should return log when file not found (tail)", () => {
+    const fileName = "Test";
+    const expectedOutput = "tail: " + fileName + ": No such file or directory";
+    const actualOutput = fileNotFoundLog(fileName, "tail");
+
+    assert.equal(actualOutput, expectedOutput);
   });
 });

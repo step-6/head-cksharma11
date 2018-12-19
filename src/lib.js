@@ -1,11 +1,4 @@
-const {
-  validateHeadInputs,
-  validateTailInputs
-} = require("./errorHandler.js");
-
-const fileNotFoundLog = function(fileName, command) {
-  return command + ": " + fileName + ": No such file or directory";
-};
+const { validateHeadInputs, validateTailInputs } = require("./errorHandler.js");
 
 const getFileContents = function(fs, fileNames) {
   return fileNames.map(file => {
@@ -48,7 +41,6 @@ const validations = { head: validateHeadInputs, tail: validateTailInputs };
 module.exports = {
   getLinesFromHead,
   getCharsFromHead,
-  fileNotFoundLog,
   getFileContents,
   getLinesFromTail,
   getCharsFromTail,

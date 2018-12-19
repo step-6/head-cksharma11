@@ -2,10 +2,10 @@ const {
   operations,
   validations,
   getFileContents,
-  fileNotFoundLog,
   runCommand
 } = require("./lib.js");
 const { zip } = require("./util.js");
+const { fileNotFoundLog } = require("./errorHandler.js");
 
 const isSingleExistingFile = function(fileCount, content) {
   return fileCount == 1 && content != null;

@@ -3,7 +3,6 @@ const { mockReader, mockValidator } = require("./testHelpers.js");
 const {
   getLinesFromHead,
   getCharsFromHead,
-  fileNotFoundLog,
   getFileContents,
   getLinesFromTail,
   getCharsFromTail,
@@ -61,24 +60,6 @@ describe("getCharsFromHead", () => {
 
   it("should return first 5 characters of contents with n = 5", () => {
     assert.equal(getCharsFromHead(fileContents, 5), "This ");
-  });
-});
-
-describe("fileNotFoundLog", () => {
-  it("should return log when file not found (head)", () => {
-    const fileName = "Test";
-    const expectedOutput = "head: " + fileName + ": No such file or directory";
-    const actualOutput = fileNotFoundLog(fileName, "head");
-
-    assert.equal(actualOutput, expectedOutput);
-  });
-
-  it("should return log when file not found (tail)", () => {
-    const fileName = "Test";
-    const expectedOutput = "tail: " + fileName + ": No such file or directory";
-    const actualOutput = fileNotFoundLog(fileName, "tail");
-
-    assert.equal(actualOutput, expectedOutput);
   });
 });
 

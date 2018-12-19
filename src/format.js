@@ -12,7 +12,6 @@ const isSingleExistingFile = function(fileCount, content) {
 };
 
 const addHeader = function(fileName, content) {
-  if (content == null) return content;
   return "==> " + fileName + " <==\n" + content;
 };
 
@@ -20,6 +19,7 @@ const maybeAddHeader = function(contents, fileNames) {
   if (isSingleExistingFile(fileNames.length, contents[0])) return [contents];
 
   return zip(contents, fileNames).map(([content, fileName]) => {
+    if (content == null) return content;
     return addHeader(fileName, content);
   });
 };

@@ -2,20 +2,20 @@ const isNumber = function(numberCandidate) {
   return !isNaN(numberCandidate);
 };
 
-const isOptionSpecified = function(input) {
-  return input.startsWith("-");
+const isOptionSpecified = function(option) {
+  return option.startsWith("-");
 };
 
-const isNumberOption = function(input) {
-  return isOptionSpecified(input) && isNumber(input[1]);
+const isNumberOption = function(option) {
+  return isOptionSpecified(option) && isNumber(option[1]);
 };
 
-const isOptionWithCount = function(input) {
-  return isOptionSpecified(input) && input.length > 2;
+const isOptionWithCount = function(option) {
+  return isOptionSpecified(option) && option.length > 2;
 };
 
-const isOptionWithoutCount = function(input) {
-  return isOptionSpecified(input) && input.length == 2;
+const isOptionWithoutCount = function(option) {
+  return isOptionSpecified(option) && option.length == 2;
 };
 
 const getNumberOptions = function(inputs) {

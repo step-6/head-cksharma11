@@ -2,7 +2,7 @@ const assert = require("assert");
 const {
   validateHeadInputs,
   validateTailInputs
-} = require("../src/inputValidation.js");
+} = require("../src/errorHandler.js");
 
 describe("validateHeadInputs", () => {
   it("should return (isValid: true) when input is valid", () => {

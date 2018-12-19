@@ -7,7 +7,7 @@
 45,49,50        organizeHead(), organizeTail() and organizeResult() : these function names can be changed.
 61              input arguements order can be changed and also it can be passed within object.
 ```
-### inputValidation.js
+### errorHandler.js
 ```
 2        object name optionMapping can be changed and it should be plural.
 25       isFileCountInvalid() : poor naming and also not needed.

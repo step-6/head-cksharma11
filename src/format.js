@@ -32,8 +32,8 @@ const addFileNotFoundLog = function(fileNames, contents, command) {
 };
 
 const organizeResult = function(fs, { option, count, fileNames }, command) {
-  const inputValidation = validations[command]({ option, count, fileNames });
-  if (!inputValidation.isValid) return inputValidation.errorMessage;
+  const errorHandler = validations[command]({ option, count, fileNames });
+  if (!errorHandler.isValid) return errorHandler.errorMessage;
   if (count == 0) return "";
 
   const operation = operations[command][option];

@@ -1,7 +1,7 @@
 const {
   validateHeadInputs,
   validateTailInputs
-} = require("./inputValidation.js");
+} = require("./errorHandler.js");
 
 const fileNotFoundLog = function(fileName, command) {
   return command + ": " + fileName + ": No such file or directory";

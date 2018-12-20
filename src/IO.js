@@ -22,22 +22,6 @@ const createParsedInputs = function(option, count, fileNames) {
   return { option, count, fileNames };
 };
 
-const getNumberOptions = function(inputs) {
-  return createParsedInputs("-n", inputs[0].slice(1), inputs.slice(1));
-};
-
-const getOptionsWithCount = function(inputs) {
-  return createParsedInputs(
-    inputs[0].slice(0, 2),
-    inputs[0].substr(2),
-    inputs.slice(1)
-  );
-};
-
-const getOptionsWithoutCount = function(inputs) {
-  return createParsedInputs(inputs[0].slice(0, 2), inputs[1], inputs.slice(2));
-};
-
 const getDefaultOptions = function(inputs) {
   return { option: "-n", count: 10, fileNames: inputs };
 };
@@ -46,15 +30,23 @@ const parseInputs = function(inputs) {
   const option = inputs[0];
 
   if (isNumberOption(option)) {
-    return getNumberOptions(inputs);
+    return createParsedInputs("-n", inputs[0].slice(1), inputs.slice(1));
   }
 
   if (isOptionWithCount(option)) {
-    return getOptionsWithCount(inputs);
+    return createParsedInputs(
+      inputs[0].slice(0, 2),
+      inputs[0].substr(2),
+      inputs.slice(1)
+    );
   }
 
   if (isOptionWithoutCount(option)) {
-    return getOptionsWithoutCount(inputs);
+    return createParsedInputs(
+      inputs[0].slice(0, 2),
+      inputs[1],
+      inputs.slice(2)
+    );
   }
 
   return getDefaultOptions(inputs);

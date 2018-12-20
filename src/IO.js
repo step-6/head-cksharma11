@@ -1,24 +1,18 @@
 const parseInputs = function(inputs) {
-  const option = inputs[0];
+  const startingArgs = inputs[0];
+  let option = inputs[0].slice(0, 2);
+  let fileNames = inputs.slice(1);
 
-  if (isNumberOption(option)) {
-    return createParsedInputs("-n", inputs[0].slice(1), inputs.slice(1));
+  if (isNumberOption(startingArgs)) {
+    return createParsedInputs("-n", inputs[0].slice(1), fileNames);
   }
 
-  if (isOptionWithCount(option)) {
-    return createParsedInputs(
-      inputs[0].slice(0, 2),
-      inputs[0].substr(2),
-      inputs.slice(1)
-    );
+  if (isOptionWithCount(startingArgs)) {
+    return createParsedInputs(option, inputs[0].substr(2), fileNames);
   }
 
-  if (isOptionWithoutCount(option)) {
-    return createParsedInputs(
-      inputs[0].slice(0, 2),
-      inputs[1],
-      inputs.slice(2)
-    );
+  if (isOptionWithoutCount(startingArgs)) {
+    return createParsedInputs(option, inputs[1], inputs.slice(2));
   }
 
   return getDefaultOptions(inputs);

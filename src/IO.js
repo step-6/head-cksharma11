@@ -18,28 +18,24 @@ const isOptionWithoutCount = function(option) {
   return isOptionSpecified(option) && option.length == 2;
 };
 
+const createParsedInputs = function(option, count, fileNames) {
+  return { option, count, fileNames };
+};
+
 const getNumberOptions = function(inputs) {
-  return {
-    option: "-n",
-    count: inputs[0].slice(1),
-    fileNames: inputs.slice(1)
-  };
+  return createParsedInputs("-n", inputs[0].slice(1), inputs.slice(1));
 };
 
 const getOptionsWithCount = function(inputs) {
-  return {
-    option: inputs[0].slice(0, 2),
-    count: inputs[0].substr(2),
-    fileNames: inputs.slice(1)
-  };
+  return createParsedInputs(
+    inputs[0].slice(0, 2),
+    inputs[0].substr(2),
+    inputs.slice(1)
+  );
 };
 
 const getOptionsWithoutCount = function(inputs) {
-  return {
-    option: inputs[0].slice(0, 2),
-    count: inputs[1],
-    fileNames: inputs.slice(2)
-  };
+  return createParsedInputs(inputs[0].slice(0, 2), inputs[1], inputs.slice(2));
 };
 
 const getDefaultOptions = function(inputs) {

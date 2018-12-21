@@ -38,9 +38,9 @@ const organizeResult = function(fs, { option, count, fileNames }, command) {
 
   const operation = operations[command][option];
   const fileContents = getFileContents(fs, fileNames);
-  let result = runCommand(fileContents, count, operation);
-  result = formatWithHeader(result, fileNames);
-  return addFileNotFoundLog(fileNames, result, command).join("\n\n");
+  const filteredData = runCommand(fileContents, count, operation);
+  const formattedData = formatWithHeader(filteredData, fileNames);
+  return addFileNotFoundLog(fileNames, formattedData, command).join("\n\n");
 };
 
 module.exports = {

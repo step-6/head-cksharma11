@@ -1,6 +1,6 @@
 const isInvalidOption = option => option != "-n" && option != "-c";
 const optionMapping = { "-n": "line", "-c": "byte" };
-const headUsageMessage = "usage: head [-n lines | -c bytes] [file ...]";
+const headUsageMessage = `usage: head [-n lines | -c bytes] [file ...]`;
 const tailUsageMessage =
   "usage: tail [-F | -f | -r] [-q] [-b # | -c # | -n #] [file ...]";
 
@@ -62,7 +62,7 @@ const validateTailInputs = function({ option, count, fileNames }) {
 };
 
 const fileNotFoundLog = function(fileName, command) {
-  return command + ": " + fileName + ": No such file or directory";
+  return `${command}: ${fileName}: No such file or directory`;
 };
 
 module.exports = {

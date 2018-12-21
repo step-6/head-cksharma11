@@ -15,7 +15,7 @@ const addHeader = function(fileName, content) {
   return "==> " + fileName + " <==\n" + content;
 };
 
-const addHeaderForMultipleFiles = function(contents, fileNames) {
+const formatWithHeader = function(contents, fileNames) {
   if (isSingleExistingFile(fileNames.length, contents[0])) return [contents];
 
   return zip(contents, fileNames).map(([content, fileName]) => {
@@ -39,7 +39,7 @@ const organizeResult = function(fs, { option, count, fileNames }, command) {
   const operation = operations[command][option];
   const fileContents = getFileContents(fs, fileNames);
   let result = runCommand(fileContents, count, operation);
-  result = addHeaderForMultipleFiles(result, fileNames);
+  result = formatWithHeader(result, fileNames);
   return addFileNotFoundLog(fileNames, result, command).join("\n\n");
 };
 

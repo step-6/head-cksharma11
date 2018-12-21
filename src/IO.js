@@ -1,41 +1,41 @@
-const parseInputs = function(inputs) {
-  const startingArgs = inputs[0];
-  let option = inputs[0].slice(0, 2);
-  let fileNames = inputs.slice(1);
+const parseInputs = function(userArgs) {
+  const startingArgs = userArgs[0];
+  let option = userArgs[0].slice(0, 2);
+  let fileNames = userArgs.slice(1);
 
   if (isNumberOption(startingArgs)) {
-    return createParsedInputs("-n", inputs[0].slice(1), fileNames);
+    return createParsedInputs("-n", userArgs[0].slice(1), fileNames);
   }
 
   if (isOptionWithCount(startingArgs)) {
-    return createParsedInputs(option, inputs[0].substr(2), fileNames);
+    return createParsedInputs(option, userArgs[0].substr(2), fileNames);
   }
 
   if (isOptionWithoutCount(startingArgs)) {
-    return createParsedInputs(option, inputs[1], inputs.slice(2));
+    return createParsedInputs(option, userArgs[1], userArgs.slice(2));
   }
 
-  return getDefaultOptions(inputs);
+  return getDefaultOptions(userArgs);
 };
 
 const isNumber = function(numberCandidate) {
   return !isNaN(numberCandidate);
 };
 
-const isOptionSpecified = function(option) {
-  return option.startsWith("-");
+const isOptionSpecified = function(startingArgs) {
+  return startingArgs.startsWith("-");
 };
 
-const isNumberOption = function(option) {
-  return isOptionSpecified(option) && isNumber(option[1]);
+const isNumberOption = function(startingArgs) {
+  return isOptionSpecified(startingArgs) && isNumber(startingArgs[1]);
 };
 
-const isOptionWithCount = function(option) {
-  return isOptionSpecified(option) && option.length > 2;
+const isOptionWithCount = function(startingArgs) {
+  return isOptionSpecified(startingArgs) && startingArgs.length > 2;
 };
 
-const isOptionWithoutCount = function(option) {
-  return isOptionSpecified(option) && option.length == 2;
+const isOptionWithoutCount = function(startingArgs) {
+  return isOptionSpecified(startingArgs) && startingArgs.length == 2;
 };
 
 const createParsedInputs = function(option, count, fileNames) {

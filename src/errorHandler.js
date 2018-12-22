@@ -38,7 +38,7 @@ const validateHeadInputs = function({ option, count, fileNames }) {
   };
 };
 
-const validateTailInputs = function({ option, count, fileNames }) {
+const validateTailInputs = function({ option, count }) {
   const isInvalidCount = count => isNaN(count);
 
   if (isInvalidOption(option, count)) {
